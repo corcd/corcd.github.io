@@ -1,0 +1,1 @@
+User-agent: * Allow: / 或者 User-agent: * Disallow:
