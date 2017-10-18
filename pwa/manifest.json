@@ -1,7 +1,7 @@
 {
-  "name": "Hux Blog",
-  "short_name": "Hux Blog",
-  "description": "About an engineer & designer who loves web.",
+  "name": "Corcd Blog",
+  "short_name": "Corcd Blog",
+  "description": "One HZNUer & an Web Amateur.",
   "icons": [{
     "src": "icons/128.png",
     "sizes": "128x128",
