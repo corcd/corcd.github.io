@@ -49,7 +49,6 @@ kramdown:
 
 # Disqus settings
 disqus_username: corcd
-comments: true
 
 # Netease setttings
 netease_comment: false
