@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: whzcorcd@gmail.com
 description: " 人生路途中的旅人 | 王含泽，One HZNUer & Web Amateur  | 这里是 @corcd 的个人博客，与你一起发现更大的世界。"
 keyword: "王含泽, whzcorcd, corcd, @corcd,  王含泽的博客, Corcd Blog, 博客, 个人网站, 互联网, Web"
-url: ""              # your host, for absolute URL
+url: "https://corcd.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
