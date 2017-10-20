@@ -82,7 +82,7 @@
                 <p class="copyright text-muted">
                     Copyright &copy; {{ site.time | date: '%Y' }} {{ site.title }} 
                     <br>
-                    Designed by <a href="https://github.com/Huxpro/huxpro.github.io">HuxPro</a> |
+                    Theme by <a href="https://github.com/Huxpro/huxpro.github.io">HuxPro</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="100px" height="20px"
@@ -90,7 +90,10 @@
                     </iframe>
                     <br>
                     <br>
-                    <span id="busuanzi_container_site_pv">本站总计访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+                    {{ site.time | date_to_xmlschema }}
+                    <br>
+                    <br>
+                    <span id="busuanzi_container_site_pv">总计访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
                 </p>
             </div>
         </div>
