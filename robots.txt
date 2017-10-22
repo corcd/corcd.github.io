@@ -1,1 +1,3 @@
-User-agent: * Allow: / 或者 User-agent: * Disallow:
+# robots.txt 
+User-agent: *
+Disallow: 

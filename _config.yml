@@ -7,7 +7,7 @@ description: " 人生路途中的旅人 | 王含泽，One HZNUer & Web Amateur  
 keyword: "王含泽, whzcorcd, corcd, @corcd,  王含泽的博客, Corcd Blog, 博客, 个人网站, 互联网, Web"
 url: "https://corcd.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-timezone: CN
+timezone: CN                           # fix the time
 
 
 # SNS settings
@@ -16,7 +16,7 @@ weibo_username:     WWhhzz1
 zhihu_username:     Paradise
 github_username:    corcd
 twitter_username:   NULL
-# facebook_username:  huxpro
+# facebook_username:  
 # linkedin_username:  firstname-lastname-idxxxx
 
 
@@ -31,7 +31,7 @@ anchorjs: true                          # if you want to customize anchor. check
 
 
 
-# plugins: #gem：
+# plugins: (older: gem：)
 # from PR#40, to support local preview for Jekyll 3.0
 plugins: [jekyll-paginate]
 
