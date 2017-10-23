@@ -12,6 +12,8 @@ tags:
     - git
 ---
 
+> Git 真是个好东西
+
 # 前言
 
 相信每一个第一次接触 git 的小伙伴来说，git 给的第一印象体验可能并不是太好，毕竟黑乎乎的命令行窗口、一条条抽象的 command 语句，怎么来说也没有桌面图形界面来的直观明了。不过呢，在深入接触 git 的用法之后，git 那简洁的格式而又强大的功能，会让大家真真切切地领略到 git 独具的特殊魅力，以及无与伦比的操作“爽感”，2333😂。
@@ -20,48 +22,63 @@ tags:
 
 废话不多说啦，直接进入正题
 
-## 1.1 Git 初始化配置 
+### 1.1 Git 初始化配置 
 
-- 配置使用 git 仓库的人员姓名 
+- **配置使用 git 仓库的人员姓名**
 
     `$ git config --global user.name "Your Name Comes Here"`
 
-- 配置使用 git 仓库的人员 email 
+- **配置使用 git 仓库的人员 email** 
 
     `$ git config --global user.email you@yourdomain.example.com` 
 
-## 1.2 Git 仓库初始化
+### 1.2 Git 仓库初始化
 
-- 在进入需要的目录之后，初始化本地 git 仓库
+- **在进入需要的目录之后，初始化本地 git 仓库**
 
     `$ git init`
 
-## 1.3 Git 分支操作
+### 1.3 Git 分支操作
 
-- 创建一个新分支，并切换到该分支上 
+#### Git checkout
+
+- **创建一个新分支，并切换到该分支上**
 
     `git checkout –b 新分支名`
 
-- 切换到某个已经建立的本地分支 local_branch 
+- **切换到某个已经建立的本地分支 local_branch** 
 
     `git checkout local_branch` 
 
-- 切换到服务器上的某个分支 remote_branch 
+- **切换到服务器上的某个分支 remote_branch** 
 
     `git checkout remote_branch  #远程分支 remote_branch 可以通过 git branch –r 列出`
 
-- 切换到某个 commit id 
+- **切换到某个 commit id** 
 
     `git checkout commit_id` 
 
+#### Git branch
 
-`$ git branch`
+- **创建一个分支**
 
-## 1.4 Git add 
+    `$ git branch 分支名`
 
-- 可以当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步
+    *(虽然创建了分支，但是不会将当前工作分支切换到新创建的分支上，因此，还需要命令“$ git checkout 分支名” 来切换)* 
 
-- 可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件，例如： 
+    > 区别：`$ git checout –b 分支名` 不但创建了分支，还将当前工作分支切换到了该分支上。 
+
+- **删除分支** 
+
+    `$ git branch –D 分支名` 
+
+    > 注意： 删除后，发生在该分支的所有变化都无法恢复。强制删除此分支
+
+### 1.4 Git add 
+
+- **可以当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步**
+
+- **可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件，例如：** 
 
     `$ git add dir1   #添加dir1这个目录，目录下的所有文件都被加入` 
 
@@ -69,55 +86,134 @@ tags:
 
     `$ git add .      #添加当前目录下的所有文件和子目录`
 
-## 1.5 Git rm
+### 1.5 Git rm
 
-- 当然啦，有增（add）理所应当也会有对应的减（rm）操作，可以从当前的工作目录中和索引中删除文件
+- **当然啦，有增（add）理所应当也会有对应的减（rm）操作，可以从当前的工作目录中和索引中删除文件**
 
-- 同样可以递归删除，即如果后面跟的是一个目录做为参数，则会递归删除整个目录中的所有子目录和文件，例如： 
+- **同样可以递归删除，即如果后面跟的是一个目录做为参数，则会递归删除整个目录中的所有子目录和文件，例如：** 
 
     `$ git rm –r *      #进入某个目录中，执行此语句，会删除该目录下的所有文件和子目录` 
 
     `$ git rm f1        #删除文件f1，包含本地目录和index中的此文件记录`
 
-- 综合用法
+- **综合用法**
 
     `$git rm --ached f1 #删除文件f1`
     
     *(不会删除本地目录文件，只删除index中的文件记录；将已经git add的文件remove到cache中,这样commit的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况)*
 
-## 1.6 Git commit 
+### 1.6 Git 代码操作 
 
-- 提交当前工作目录的修改内容，-m 参数可以指定当前操作的注释信息，信息不能为空
+#### Git merge
 
-- git commit 还有一个 -a 的参数，可以将那些没有通过 git add 标识的变化一并强行提交，但是不建议使用这种方式
+- **把服务器上下载下来的代码和本地代码合并。或者进行分支合并** 
 
-- 每一次提交，git就会为全局代码建立一个唯一的commit标识代码，用户可以通过git reset 命令恢复到任意一次提交时的代码
+    `$ git merge master dev~2 #合并master分支和dev~2分支`
 
-- 综合用法
+#### Git diff 
 
-    `$ git commit -a –m “message”  #在一个commit id上不断修改提交的内容`
+- **把本地的代码和index中的代码进行比较，或者是把index中的代码和本地仓库中的代码进行比较**
 
-## 1.7 Git 状态查看 
+    `$ git diff` 
 
-- 查看版本库的状态。可以得知哪些文件发生了变化，哪些文件还没有添加到git库中等等,建议每次commit前都要通过该命令确认库状态
+    *(比较工作目录和Index中的代码)*
+
+    `$ git diff --cached` 
+
+    *(比较index和本地仓库中的代码)*
+
+### 1.7 Git 状态查看 
+
+- **查看版本库的状态。可以得知哪些文件发生了变化，哪些文件还没有添加到git库中等等,建议每次commit前都要通过该命令确认库状态**
 
     `$ git status`
 
-- 查看历史日志，包含每次的版本变化。每次版本变化对应一个commit id
+- **查看历史日志，包含每次的版本变化。每次版本变化对应一个commit id**
 
     `$ git log -1`
 
     *(-1的意思是只显示一个commit，如果想显示5个，就-5。不指定的话，git log会从该commit一直往后显示)* 
 
-- 综合用法
+- **综合用法**
 
-    `$ git log --stat –summary  #显示每次版本的详细变`
+    `$ git log --stat –summary  #显示每次版本的详细变化`
 
-## 1.8 coming song...
+### 1.8 Git commit 
+
+- **提交当前工作目录的修改内容，-m 参数可以指定当前操作的注释信息，信息不能为空**
+
+- **git commit 还有一个 -a 的参数，可以将那些没有通过 git add 标识的变化一并强行提交，但是不建议使用这种方式**
+
+- **每一次提交，git就会为全局代码建立一个唯一的commit标识代码，用户可以通过git reset 命令恢复到任意一次提交时的代码**
+
+- **综合用法**
+
+    `$ git commit -a –m “message”  #在一个commit id上不断修改提交的内容`
+
+### 1.9 Git 远程服务器操作
+
+#### Git clone
+
+- **取出服务器的仓库的代码到本地建立的目录中** 
+
+    `$ git clone [url]`
+
+    *(通过 git clone 获取远端 git 库后，.git/config 中的开发者信息不会被一起 clone 过来。仍然需要为本地库的 .git/config 文件添加开发者信息。此外，开发者还需要自己添加 .gitignore 文件)*
+
+- **通过 git clone 获取的远端 git 库，只包含了远端 git 库的当前工作分支。如果想获取其它分支信息，需要使用 “$ git branch –r ” 来查看， 如果需要将远程的其它分支代码也获取过来，可以使用命令 “$ git checkout -b 本地分支名 远程分支名”，其中，远程分支名为 “$ git branch –r ” 所列出的分支名， 一般是诸如“ origin/分支名”的样子。如果本地分支名已经存在， 则不需要“ -b ”参数**
+
+#### Git fetch 
+
+- **从服务器的仓库中下载最新代码** 
+
+    `$ git fetch [url]`
+
+    *(相当于从远程获取最新版本到本地，不会自动 merge ，比 Git pull 更安全些)* 
+
+#### Git remote 
+
+- **查看当前的远程仓库**
+
+    `$ git remote     #不带参数，列出已经存在的远程分支`
+
+    `$ git remote -v  #出详细信息，在每一个名字后面列出其远程url`
+
+- **添加远程仓库**
+
+    `$ git remote add [shortname] [url]`
+
+    *(要添加一个新的远程仓库,可以指定一个简单的名字,以便将来引用)*
+
+
+#### Git pull 
+
+- **从服务器的仓库中获取代码，和本地代码合并，等同于： Git fetch + Git merge** 
+
+- **从其它的版本库（既可以是远程的也可以是本地的）将代码更新到本地，例如：“$ git pull origin master ”就是将 origin 这个版本库的代码更新到本地的 master 主分支** 
+
+    `$ git pull username@ipaddr:远端repository名远端分支名 本地分支名`
+
+    *(这条命令将从远端 git 库的远端分支名获取到本地 git 库的一个本地分支中。其中，如果不写本地分支名，则默认 pull 到本地当前分支)* 
+
+    > 注意：git pull 也可以用来合并分支。 和 git merge 的作用相同。 因此，如果你的本地分支已经有内容，则 git pull 会合并这些文件，如果有冲突会报警
+
+#### Git push
+
+- **将本地commit的代码更新到远程仓库remote_branch分支中，例如：**
+
+    `$ git push origin remote_branch`  
+
+    *(git push 和 git pull 正好想反，是将本地某个分支的内容提交到远端某个分支上。用法： git pushusername@ipaddr:远端 repository 名本地分支名 远端分支名。这条命令将本地 git 库的一个本地分支 push 到远端 git 库的远端分支名中)*
+
+    > 注意：git push 好像不会自动合并文件。因此，如果 git push 时，发生了冲突，就会被后 push 的文件内容强行覆盖，而且没有什么提示。 这在合作开发时是很危险的事情
+
+
 
 
 
 
 # 参考文档
 
-- [GIT 的使用方法详解]  <http://blog.csdn.net/sunweizhong1024/article/details/8055400/>
+1. **[Git 使用详细介绍]**  <http://blog.csdn.net/gemmem/article/details/7290125>
+
+2. **[git命令之git remote的用法]** <http://blog.csdn.net/wangjia55/article/details/8802490>
