@@ -13,9 +13,9 @@ timezone: CN                           # fix the time
 # SNS settings
 RSS: false
 weibo_username:     WWhhzz1
-zhihu_username:     Paradise
+zhihu_username:     NULL
 github_username:    corcd
-twitter_username:   NULL
+twitter_username:   whzcorcd
 # facebook_username:  
 # linkedin_username:  firstname-lastname-idxxxx
 
