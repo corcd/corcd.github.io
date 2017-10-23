@@ -53,6 +53,8 @@ disqus_username: corcd
 # Netease setttings
 netease_comment: false
 
+# UY setttings
+UY_comment: false
 
 
 # Analytics settings

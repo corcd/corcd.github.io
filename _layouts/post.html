@@ -97,9 +97,13 @@ comments: true
                     </li>
                     {% endif %}
                 </ul>
-
-
-                {% if site.disqus_username %}
+                
+                <!-- UY BEGIN -->
+                {% if site.UY_comment %}
+                <br>
+                <div id="uyan_frame"></div>
+                <!-- UY END -->
+                {% endif %}{% if site.disqus_username %}
                 <!-- disqus 评论框 start -->
                 <div class="comment">
                     <div id="disqus_thread" class="disqus-thread"></div>
@@ -157,8 +161,11 @@ comments: true
     </div>
 </article>
 
-
-{% if site.netease_comment %}
+<!-- UY BEGIN -->
+{% if site.UY_comment %}
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2147168"></script>
+<!-- UY END -->
+{% endif %}{% if site.netease_comment %}
 <!-- 网易云跟帖JS代码 start -->
 <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
 <script>
