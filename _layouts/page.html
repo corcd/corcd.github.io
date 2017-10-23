@@ -110,6 +110,9 @@ comments: true
                         {% if site.sidebar-avatar %}
                             <img id="me" src="{{site.sidebar-avatar}}" />
                         {% endif %}
+                        {% if site.sidebar-owner %}
+                            <h3><a href="{{'/portfolio/' | prepend: site.baseurl }}">{{site.sidebar-owner}}</a></h3>
+                        {% endif %}
                         {% if site.sidebar-about-description %}
                             <p>{{site.sidebar-about-description}}</p>
                         {% endif %}
@@ -117,7 +120,7 @@ comments: true
                         <ul class="list-inline">
                             {% if site.RSS %}
                             <li>
-                                <a href="{{ "/feed.xml" | prepend: site.baseurl }}">
+                                <a href="{{ '/feed.xml' | prepend: site.baseurl }}">
                                     <span class="fa-stack fa-lg">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
