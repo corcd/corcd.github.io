@@ -113,7 +113,7 @@ tags:
 
     `$ git log --stat –summary  #显示每次版本的详细变`
 
-## 1.8 comming song...
+## 1.8 coming song...
 
 
 
