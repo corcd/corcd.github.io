@@ -3,6 +3,10 @@ layout: default
 comments: true
 ---
 
+{% if site.fadeIn %}
+<!-- Image fadeIn function -->
+{% endif %}
+
 <!-- Page Header -->
 <header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
     <div class="container">
@@ -104,7 +108,7 @@ comments: true
                     <hr><h5><a href="{{'/about/' | prepend: site.baseurl }}">ABOUT ME</a></h5>
                     <div class="short-about">
                         {% if site.sidebar-avatar %}
-                            <img src="{{site.sidebar-avatar}}" />
+                            <img id="me" src="{{site.sidebar-avatar}}" />
                         {% endif %}
                         {% if site.sidebar-about-description %}
                             <p>{{site.sidebar-about-description}}</p>
@@ -198,4 +202,3 @@ comments: true
         {% endif %}
 	</div>
 </div>
-

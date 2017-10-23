@@ -8,7 +8,7 @@ keyword: "王含泽, whzcorcd, corcd, @corcd,  王含泽的博客, Corcd Blog, �
 url: "https://corcd.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 timezone: CN                           # fix the time
-
+# fadeIn: true
 
 # SNS settings
 RSS: false
