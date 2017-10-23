@@ -8,10 +8,9 @@ header-img:   "img/post-bg-new-begining.jpg"
 header-mask:  0.3
 catalog:      true
 tags:
-    - 生活
     - Blog
 ---
 
 # 全新的面貌
 
-测试一看
+**Blog 焕然一新，新博客新气象，先测试一看**
