@@ -56,7 +56,7 @@ tags:
 
     `$ git checkout [remote_branch]`  
     
-    > 提示：远程分支 remote_branch 可以通过 `$ git branch –r` 列出
+    > 提示：远程分支 [remote_branch] 可以通过 `$ git branch –r` 列出
 
 - **切换到标识 id 为 commit id 的分支上** 
 
@@ -84,11 +84,11 @@ tags:
 
 - **可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件，例如：** 
 
-    `$ git add dir1   #添加dir1这个目录，目录下的所有文件都被加入` 
+    `$ git add [dir]            #添加[dir]这个目录，目录下的所有文件都被加入` 
 
-    `$ git add f1 f2  #添加f1，f2文件` 
+    `$ git add [file1] [file2]  #添加[file1]，[file2]文件` 
 
-    `$ git add .      #添加当前目录下的所有文件和子目录`
+    `$ git add .                #添加当前目录下的所有文件和子目录`
 
 ### 1.5 Git rm
 
@@ -96,11 +96,11 @@ tags:
 
 - **同样可以递归删除，即如果后面跟的是一个目录做为参数，则会递归删除整个目录中的所有子目录和文件，例如：** 
 
-    `$ git rm –r *      #进入某个目录中，执行此语句，会删除该目录下的所有文件和子目录` 
+    `$ git rm –r *          #进入某个目录中，执行此语句，会删除该目录下的所有文件和子目录` 
 
-    `$ git rm f1        #删除文件f1，包含本地目录和index中的此文件记录`
+    `$ git rm [file]        #删除文件[file]，包含本地目录和index中的此文件记录`
 
-    `$git rm --ached f1 #删除文件f1`
+    `$git rm --ached [file] #删除文件[file]`
     
     > 提示：加入--ached 参数后，不会删除本地目录文件，只删除 index 中的文件记录；将已经 git add 的文件 remove 到 cache 中,这样 commit 的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况
 
@@ -116,9 +116,9 @@ tags:
 
 - **把本地的代码和 index 中的代码进行比较，或者把 index 中的代码和本地仓库中的代码进行比较**
 
-    `$ git diff #比较工作目录和 Index 中的代码` 
+    `$ git diff           #比较工作目录和 Index 中的代码` 
 
-    `$ git diff --cached #比较 index 和本地仓库中的代码` 
+    `$ git diff --cached  #比较 index 和本地仓库中的代码` 
 
 ### 1.7 Git 状态查看 
 
@@ -189,7 +189,7 @@ tags:
 
     `$ git pull username@ipaddr:[remote_repository] [remote_branch] [local_branch]`
 
-    *(这条命令将从远端仓库[remote_repository]中的远端分支名 [remote_branch] 获取到本地 git 库的一个本地分支中。其中，如果不写本地分支名 [local_branch]，则默认 pull 到本地当前分支)* 
+    *(这条命令将从远端仓库 [remote_repository] 中的远端分支名 [remote_branch] 获取到本地 git 库的一个本地分支中。其中，如果不写本地分支名 [local_branch]，则默认 pull 到本地当前分支)* 
 
     > 注意：git pull 也可以用来合并分支。 和 git merge 的作用相同。 因此，如果你的本地分支已经有内容，则 git pull 会合并这些文件，如果有冲突会报警
 
