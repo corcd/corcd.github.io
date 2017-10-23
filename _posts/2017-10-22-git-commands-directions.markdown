@@ -1,7 +1,7 @@
 ---
 layout:       post
-title:        "git 的简单用法"
-subtitle:     " git 命令用法，快速入门 git 简单应用"
+title:        "Git 的简单用法"
+subtitle:     " Git 命令用法，快速入门 Git 简单应用"
 date:         2017-10-23
 author:       "corcd"
 header-img:   "img/post-bg-git.jpg"
@@ -14,7 +14,7 @@ tags:
 
 > Git 真是个好东西
 
-# 前言
+# 写在前面
 
 相信每一个第一次接触 git 的小伙伴来说，git 给的第一印象体验可能并不是太好，毕竟黑乎乎的命令行窗口、一条条抽象的 command 语句，怎么来说也没有桌面图形界面来的直观明了。不过呢，在深入接触 git 的用法之后，git 那简洁的格式而又强大的功能，会让大家真真切切地领略到 git 独具的特殊魅力，以及无与伦比的操作“爽感”，2333😂
 
@@ -203,6 +203,15 @@ tags:
 
     > 注意：git push 好像不会自动合并文件。因此，如果 git push 时，发生了冲突，就会被后 push 的文件内容强行覆盖，而且没有什么提示。 这在合作开发时是很危险的事情
 
+# 还有话说...
+
+### 推荐的应用
+
+**整理了这么多，最后嘛给大家推荐一个很棒很 Nice 的应用程序 :**
+
+![](/img/Sourcetree-ico.svg) 
+
+**[Sourcetree](https://www.sourcetreeapp.com/),这是一个图形化的 git 管理应用，支持 Win 和 macOS，直观明了的操作让 git 的使用体验指数上升，值得一试！**
 
 -------
 
