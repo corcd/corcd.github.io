@@ -20,7 +20,7 @@ tags:
 
 废话不多说啦，直接进入正题
 
-1.1 Git 初始化配置 
+## 1.1 Git 初始化配置 
 
 - 配置使用 git 仓库的人员姓名 
 
@@ -30,13 +30,13 @@ tags:
 
     `$ git config --global user.email you@yourdomain.example.com` 
 
-1.2 Git 仓库初始化
+## 1.2 Git 仓库初始化
 
 - 在进入需要的目录之后，初始化本地 git 仓库
 
     `$ git init`
 
-1.3 Git 分支操作
+## 1.3 Git 分支操作
 
 - 创建一个新分支，并切换到该分支上 
 
@@ -57,7 +57,7 @@ tags:
 
 `$ git branch`
 
-1.4 Git add 
+## 1.4 Git add 
 
 - 可以当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步
 
@@ -69,7 +69,7 @@ tags:
 
     `$ git add .      #添加当前目录下的所有文件和子目录`
 
-1.5 Git rm
+## 1.5 Git rm
 
 - 当然啦，有增（add）理所应当也会有对应的减（rm）操作，可以从当前的工作目录中和索引中删除文件
 
@@ -83,7 +83,7 @@ tags:
     
     *(不会删除本地目录文件，只删除index中的文件记录；将已经git add的文件remove到cache中,这样commit的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况)*
 
-1.6 Git commit 
+## 1.6 Git commit 
 
 - 提交当前工作目录的修改内容，-m 参数可以指定当前操作的注释信息，信息不能为空
 
@@ -93,7 +93,7 @@ tags:
 
     `$ git commit -a –m “message”  #在一个commit id上不断修改提交的内容`
 
-1.7 Git 状态查看 
+## 1.7 Git 状态查看 
 
 - 查看版本库的状态。可以得知哪些文件发生了变化，哪些文件还没有添加到git库中等等,建议每次commit前都要通过该命令确认库状态
 
@@ -107,11 +107,11 @@ tags:
 
     `$ git log --stat –summary  #显示每次版本的详细变`
 
-1.8 comming song...
-
-1.9
+## 1.8 comming song...
 
 
-## 参考文档
+
+
+# 参考文档
 
 - [GIT 的使用方法详解]  <http://blog.csdn.net/sunweizhong1024/article/details/8055400/>
