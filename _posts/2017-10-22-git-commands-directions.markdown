@@ -79,6 +79,8 @@ tags:
 
     `$ git rm f1        #删除文件f1，包含本地目录和index中的此文件记录`
 
+- 综合用法
+
     `$git rm --ached f1 #删除文件f1`
     
     *(不会删除本地目录文件，只删除index中的文件记录；将已经git add的文件remove到cache中,这样commit的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况)*
@@ -90,6 +92,8 @@ tags:
 - git commit 还有一个 -a 的参数，可以将那些没有通过 git add 标识的变化一并强行提交，但是不建议使用这种方式
 
 - 每一次提交，git就会为全局代码建立一个唯一的commit标识代码，用户可以通过git reset 命令恢复到任意一次提交时的代码
+
+- 综合用法
 
     `$ git commit -a –m “message”  #在一个commit id上不断修改提交的内容`
 
@@ -104,6 +108,8 @@ tags:
     `$ git log -1`
 
     *(-1的意思是只显示一个commit，如果想显示5个，就-5。不指定的话，git log会从该commit一直往后显示)* 
+
+- 综合用法
 
     `$ git log --stat –summary  #显示每次版本的详细变`
 
