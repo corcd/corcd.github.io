@@ -1,7 +1,7 @@
 ---
 layout:       post
 title:        "Git 的简单用法"
-subtitle:     " Git 命令用法，快速入门 Git 简单应用"
+subtitle:     "快速入门 Git 简单应用"
 date:         2017-10-23
 author:       "corcd"
 header-img:   "img/post-bg-git.jpg"
@@ -28,17 +28,23 @@ tags:
 
 - **配置使用 git 仓库的人员姓名**
 
-    `$ git config --global user.name "Your Name Comes Here"`
+    ```shell
+    $ git config --global user.name "Your Name Comes Here"
+    ```
 
 - **配置使用 git 仓库的人员 email** 
 
-    `$ git config --global user.email you@yourdomain.example.com` 
+    ```shell
+    $ git config --global user.email you@yourdomain.example.com
+    ```
 
 ### 1.2 Git 本地仓库初始化
 
 - **在进入需要的目录之后，初始化本地 git 仓库**
 
-    `$ git init`
+    ```shell
+    $ git init
+    ```
 
 ### 1.3 Git 分支操作
 
@@ -46,35 +52,47 @@ tags:
 
 - **创建一个新分支，并切换到该分支上**
 
-    `$ git checkout –b [new_branch_name]`
+    ```shell
+    $ git checkout –b [new_branch_name]
+    ```
 
 - **切换到已经建立的本地分支 local_branch 上** 
 
-    `$ git checkout [local_branch]` 
+    ```shell
+    $ git checkout [local_branch]
+    ``` 
 
 - **切换到服务器上的分支 remote_branch** 
 
-    `$ git checkout [remote_branch]`  
+    ```shell
+    $ git checkout [remote_branch]
+    ```
     
     > 提示：远程分支 [remote_branch] 可以通过 `$ git branch –r` 列出
 
 - **切换到标识 id 为 commit id 的分支上** 
 
-    `$ git checkout [commit_id]` 
+    ```shell
+    $ git checkout [commit_id]
+    ``` 
 
 #### Git branch
 
 - **创建一个分支**
 
-    `$ git branch [branch_name]`
+    ```shell
+    $ git branch [branch_name]
+    ```
 
-    *(虽然创建了分支，但是不会将当前工作分支切换到新创建的分支上，因此，还需要命令`$ git checkout [branch_name]` 来切换)* 
+    *(虽然创建了分支，但是不会将当前工作分支切换到新创建的分支上，因此，还需要命令`$ git checkout [branch_name]` 来切换)*
 
     > 区别：如果使用`$ git checout –b [branch_name]` ，不仅创建了分支，还将当前工作分支切换到了该分支上
 
 - **删除分支** 
 
-    `$ git branch –D [branch_name]` 
+    ```shell
+    $ git branch –D [branch_name]
+    ``` 
 
     > 注意： 强制删除了此分支，而且删除后，发生在该分支的所有变化都无法恢复
 
@@ -84,11 +102,13 @@ tags:
 
 - **可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件，例如：** 
 
-    `$ git add [dir]            #添加[dir]这个目录，目录下的所有文件都被加入` 
+    ```shell
+    $ git add [dir]            #添加[dir]这个目录，目录下的所有文件都被加入
 
-    `$ git add [file1] [file2]  #添加[file1]，[file2]文件` 
+    $ git add [file1] [file2]  #添加[file1]，[file2]文件
 
-    `$ git add .                #添加当前目录下的所有文件和子目录`
+    $ git add .                #添加当前目录下的所有文件和子目录
+    ```
 
 ### 1.5 Git rm
 
@@ -96,13 +116,15 @@ tags:
 
 - **同样可以递归删除，即如果后面跟的是一个目录做为参数，则会递归删除整个目录中的所有子目录和文件，例如：** 
 
-    `$ git rm –r *           #进入某个目录中，执行此语句，会删除该目录下的所有文件和子目录` 
+    ```shell
+    $ git rm –r *            #进入某个目录中，执行此语句，会删除该目录下的所有文件和子目录
 
-    `$ git rm [file]         #删除文件[file]，包含本地目录和index中的此文件记录`
+    $ git rm [file]          #删除文件[file]，包含本地目录和index中的此文件记录
 
-    `$ git rm --ached [file] #删除文件[file]`
+    $ git rm --ached [file]  #删除文件[file]
+    ```
     
-    > 提示：加入--ached 参数后，不会删除本地目录文件，只删除 index 中的文件记录；将已经 git add 的文件 remove 到 cache 中,这样 commit 的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况
+    > 提示：加入 --ached 参数后，不会删除本地目录文件，只删除 index 中的文件记录；将已经 git add 的文件 remove 到 cache 中,这样 commit 的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况
 
 ### 1.6 Git 代码操作 
 
@@ -110,31 +132,39 @@ tags:
 
 - **将服务器上下载的代码和本地代码合并，或者进行分支合并** 
 
-    `$ git merge [branch_1] [branch_2] #合并两个分支`
+    ```shell
+    $ git merge [branch_1] [branch_2]  #合并两个分支
+    ```
 
 #### Git diff 
 
 - **把本地的代码和 index 中的代码进行比较，或者把 index 中的代码和本地仓库中的代码进行比较**
 
-    `$ git diff           #比较工作目录和 Index 中的代码` 
+    ```shell
+    $ git diff           #比较工作目录和 Index 中的代码
 
-    `$ git diff --cached  #比较 index 和本地仓库中的代码` 
+    $ git diff --cached  #比较 index 和本地仓库中的代码
+    ```
 
 ### 1.7 Git 状态查看 
 
 - **查看版本库的状态**
 
-    `$ git status`
+    ```shell
+    $ git status
+    ```
 
     > 提示：可以得知哪些文件发生了变化，哪些文件还没有添加到 git 库中等等，建议每次 commit 前都要通过该命令确认库状态
 
 - **查看历史日志，包含每次的版本变化，每次版本变化对应一个 commit id**
 
-    `$ git log -1`
+    ```shell
+    $ git log -1
+
+    $ git log --stat –summary  #显示每次版本的详细变化
+    ```
 
     > 提示：-1的意思是只显示一个commit，如果想显示5个，就-5。不指定的话，git log会从该commit一直往后显示
-
-    `$ git log --stat –summary  #显示每次版本的详细变化`
 
 ### 1.8 Git commit 
 
@@ -142,7 +172,9 @@ tags:
 
 - **每一次提交，git 就会为全局代码建立一个唯一的 commit 标识代码，用户可以通过 git reset 命令恢复到任意一次提交时的代码**
 
-    `$ git commit -a –m “[message]”`
+    ```shell
+    $ git commit -a –m “[message]”
+    ```
 
     > 提示：，-m 参数可以指定当前操作的注释信息，信息不能为空；git commit 还有一个 -a 的参数，可以将那些没有通过 git add 标识的变化一并强行提交，但是不建议使用这种方式
 
@@ -152,7 +184,9 @@ tags:
 
 - **克隆服务器的仓库的代码到本地建立的目录中** 
 
-    `$ git clone [url]`
+    ```shell
+    $ git clone [url]
+    ```
 
     *(通过 git clone 获取的远端 git 库，只包含了远端 git 库的当前工作分支。如果想获取其它分支信息，需要使用 `$ git branch –r` 来查看， 如果需要将远程的其它分支代码也获取过来，可以使用命令 `$ git checkout -b [local_branch] [remote_branch]`，其中，远端分支名  [remote_branch] 为 `$ git branch –r ` 所列出的分支名， 一般是诸如 `origin/branch_name` 的样子；如果本地分支名 [local_branch] 已经存在， 则不需要 `-b` 参数)*
 
@@ -162,7 +196,9 @@ tags:
 
 - **从服务器的仓库中下载最新代码** 
 
-    `$ git fetch [url]`
+    ```shell
+    $ git fetch [url]
+    ```
 
     > 区别：相比 git pull 更安全些，相当于从远程获取最新版本到本地，不会自动 merge 
 
@@ -170,13 +206,17 @@ tags:
 
 - **查看当前的远程仓库**
 
-    `$ git remote     #不带参数，列出已经存在的远程分支`
+    ```shell
+    $ git remote     #不带参数，列出已经存在的远程分支
 
-    `$ git remote -v  #出详细信息，在每一个名字后面列出其远程url`
+    $ git remote -v  #出详细信息，在每一个名字后面列出其远程url
+    ```
 
 - **添加远程仓库**
 
-    `$ git remote add [shortname] [url]`
+    ```shell
+    $ git remote add [shortname] [url]
+    ```
 
     > 提示：要添加一个目标地址为 [url] 的远程仓库,可以指定一个简单的 [shortname] ,以便将来引用
 
@@ -187,7 +227,9 @@ tags:
 
 - **从其它的版本库（既可以是远程的也可以是本地的）将代码更新到本地，例如：`$ git pull origin master` 就是将 origin 这个版本库的代码更新到本地的 master 主分支** 
 
-    `$ git pull username@ipaddr:[remote_repository] [remote_branch] [local_branch]`
+    ```shell
+    $ git pull username@ipaddr:[remote_repository] [remote_branch] [local_branch]
+    ```
 
     *(这条命令将从远端仓库 [remote_repository] 中的远端分支名 [remote_branch] 获取到本地 git 库的一个本地分支中。其中，如果不写本地分支名 [local_branch]，则默认 pull 到本地当前分支)* 
 
@@ -197,7 +239,9 @@ tags:
 
 - **将本地 commit 提交的代码更新到远程仓库的 [remote_branch] 分支中**
 
-    `$ git push origin [remote_branch]`  
+    ```shell
+    $ git push origin [remote_branch]
+    ```
 
     > 区别：git push 和 git pull 正好想反，是将本地某个分支的内容提交到远端某个分支上。用法：`$ git pushusername@ipaddr:[remote_repository] [local_branch] [remote_branch]`，这条命令将本地 git 库的一个本地分支 push 到远端 git 库的远端分支名 [remote_branch] 中
 
