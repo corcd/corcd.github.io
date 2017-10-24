@@ -11,7 +11,7 @@ timezone: CN                           # fix the time
 # fadeIn: true
 
 # SNS settings
-RSS: false
+RSS: true
 weibo_username:     WWhhzz1
 zhihu_username:     NULL
 github_username:    corcd
