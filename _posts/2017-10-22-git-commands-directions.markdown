@@ -262,6 +262,6 @@ tags:
 # 参考文档
 
 
-1. [Git 使用详细介绍](http://blog.csdn.net/gemmem/article/details/7290125)
+1. [Git 使用详细介绍  --CSDN](http://blog.csdn.net/gemmem/article/details/7290125)
 
-2. [git 命令之 git remote 的用法](http://blog.csdn.net/wangjia55/article/details/8802490)
+2. [git 命令之 git remote 的用法  --CSDN](http://blog.csdn.net/wangjia55/article/details/8802490)

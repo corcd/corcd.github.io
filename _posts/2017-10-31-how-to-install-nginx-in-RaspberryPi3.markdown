@@ -164,6 +164,6 @@ deb-src http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui
 # 参考文档
 
 
-1. [无屏幕和键盘配置树莓派 WiFi 和 SSH](http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html)
+1. [无屏幕和键盘配置树莓派 WiFi 和 SSH  --树莓派实验室](http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html)
 
-2. [为树莓派更换国内镜像源](http://blog.csdn.net/la9998372/article/details/77886806)
+2. [为树莓派更换国内镜像源  --CSDN](http://blog.csdn.net/la9998372/article/details/77886806)
