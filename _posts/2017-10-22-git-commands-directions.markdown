@@ -9,7 +9,7 @@ header-mask:  0.3
 catalog:      true
 tags:
     - 技术
-    - git
+    - Git
 ---
 
 > Git 真是个好东西
@@ -255,7 +255,7 @@ tags:
 
 ![](/img/Sourcetree-ico.svg) 
 
-**[Sourcetree](https://www.sourcetreeapp.com/),这是一个图形化的 git 管理应用，支持 Win 和 macOS，直观明了的操作让 git 的使用体验指数上升，值得一试！**
+**[Sourcetree](https://www.sourcetreeapp.com/)，这是一个图形化的 git 管理应用，支持 Win 和 macOS，直观明了的操作让 git 的使用体验指数上升，值得一试！**
 
 -------
 
