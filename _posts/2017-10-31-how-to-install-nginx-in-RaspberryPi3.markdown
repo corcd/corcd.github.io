@@ -1,6 +1,6 @@
 ---
 layout:       post
-title:        "在树莓派3b上搭建 LNMP 服务器"
+title:        "在树莓派3上搭建 LNMP 服务器"
 subtitle:     "新入树莓派的坑，一步一个脚印自己趟过去"
 date:         2017-10-31
 author:       "corcd"
