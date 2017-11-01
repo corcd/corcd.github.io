@@ -86,11 +86,19 @@ network={
 ### 开启 SSH 服务
 
 树莓派在之前的系统更新中默认关闭了系统的 SSH 服务，需要我们手动开启。同样在 boot 分区新建一个文件（空白的即可）文件命名为 ssh，注意要小写且不要有任何扩展名。
-树莓派在启动之后会在检测到这个文件之后自动启用 SSH 服务。随后通过登录路由器管理页面，在 DHCP 客户端列表找到树莓派的 IP 地址，然后就可以通过 WiFi 通过 SSH 连接到树莓派了。
+树莓派在启动之后会在检测到这个文件之后自动启用 SSH 服务。随后通过登录路由器管理页面，在 DHCP 客户端列表找到树莓派的 IP 地址，然后就可以通过 WiFi 在同一个无线局域网内使用 SSH 连接到树莓派了。
+
+Windows 下需要安装额外的服务，macOS 系统自带了 SSH 服务，使用方法：
+
+```shell
+$ ssh (登录账户名)@(树莓派 IP 地址)
+```
+
+登录账户名默认为 `pi`，然后按提示输入登录密码（初始密码默认 `raspberry`）即可.
 
 # 远程图形处理树莓派
 
-前面通过 SSH 连接了局域网里远程的树莓派，但是只能进入到树莓派系统的命令行界面，想要方便快捷地浏览查看的话，还是需要一个友好一点的图形界面。
+前面通过 SSH 连接了局域网里远程的树莓派，但是只能进入到树莓派系统的命令行界面，想要方便快捷地浏览查看的话，还需要一个友好一点的图形界面。
 
 ### 安装 xrdp
 
@@ -123,11 +131,15 @@ $ sudo tightvncserver -geometry 800x600 :1
 
 > 先输入操作密码两次，然后会询问是否设置一个查看(view-only)密码，按自己喜欢，一般没必要。
 
+*现在还有一个遗留下来的问题，远程图形界面无法获取到 root 权限，导致目前只能通过命令行模式更改根目录下的文件，还有待进一步探究*
+
 # 安装互联网服务器组合配置
 
 ### 安装 Nginx 服务
 
 Nginx 是一款时下流行的轻量级高性能服务器，全平台通用，同样也可以在树莓派系统下安装。
+
+> 最新的系统已经内置 Apache2 服务器，不再需要我们手动安装
 
 安装过程如下：
 
@@ -170,7 +182,7 @@ $ su root
 $ sudo nano /etc/apt/sources.list
 ```
 
-用#注释掉原文件内容，用以下内容取代：
+用#注释掉原文件内容，用以下内容取代，将软件源改为国内的清华大学镜像：
 
 ```txt
 deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
@@ -179,7 +191,6 @@ deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main cont
 
 > 国内优秀源推荐：
 > - 阿里云：//mirrors.aliyun.com/raspbian/raspbian/
-> - 清华：//mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/
 > - 中科大：//lug.ustc.edu.cn/raspbian/raspbian/
 
 *注意： 网址末尾的raspbian重复两次是必须的。因为Raspbian的仓库中除了APT软件源还包含其他代码。APT软件源不在仓库的根目录，而在raspbian/子目录下。 
@@ -187,15 +198,15 @@ deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main cont
 
 ##### 编辑/etc/apt/sources.list.d/raspi.list
 
-使用管理员权限（经由 sudo），编辑`/etc/apt/sources.list.d/raspi.list`文件。参考命令行为：
+同样，使用管理员权限（经由 sudo），编辑`/etc/apt/sources.list.d/raspi.list`文件。参考命令行为：
 
 ```shell
 $ sudo nano /etc/apt/sources.list.d/raspi.list
 ```
 
-> 也可以使用 Vim 打开
+> 也可以使用 vi 命令在 Vim 中打开
 
-用#注释掉原文件内容，用以下内容取代：
+用#注释掉原文件内容，用以下内容取代，将软件源改为国内的清华大学镜像：
 
 ```txt
 deb http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui
@@ -210,7 +221,22 @@ deb-src http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui
 $ sudo apt-get update & upgrade -y
 ```
 
- 然后就可以成功安装 mysql 服务了。
+更新完毕后，重复之前安装 nginx 的步骤，然后就可以成功安装 mysql 服务了。
+
+# 至此服务器搭建完成
+
+如果有需要的话，还可以手动安装 phpmyadmin 服务，方法如下：
+```shell
+$ sudo apt-get install phpmyadmin
+```
+
+平时使用时，记得先开启 nginx 和 mysql 服务，这样才能正常的显示网页，网页默认 URL 为`http://(树莓派 IP 地址)/...`
+```shell
+$ sudo service mysql start
+$ sudo service nginx start
+```
+
+> 如使用 Apache2 则后者为`$ sudo service nginx start`
 
 # 分享一点不错的东西
 
