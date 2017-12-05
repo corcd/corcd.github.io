@@ -236,7 +236,7 @@ $ sudo service mysql start
 $ sudo service nginx start
 ```
 
-> 如使用 Apache2 则后者为`$ sudo service nginx start`
+> 如使用 Apache2 则后者为`$ sudo service apache start`
 
 # 分享一点不错的东西
 
