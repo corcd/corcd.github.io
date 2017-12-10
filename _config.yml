@@ -7,7 +7,7 @@ description: " 人生路途中的旅人 | 王含泽，One HZNUer & Web Amateur  
 keyword: "王含泽, whzcorcd, corcd, @corcd,  王含泽的博客, Corcd Blog, 博客, 个人网站, 互联网, Web"
 url: "https://corcd.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-timezone: CN                           # fix the time
+timezone: CN                           # fix the time display
 # fadeIn: true
 
 # SNS settings
@@ -72,8 +72,8 @@ ga_domain: https://corcd.github.io/
 
 
 # Sidebar settings
-sidebar: true
-sidebar-owner: Corcd                          # whether or not using Sidebar.
+sidebar: true                           # whether or not using Sidebar.
+sidebar-owner: Corcd                    # owner name setting      
 sidebar-about-description: " 学习，乐寓其中<br>路漫漫其修远兮"
 sidebar-avatar: /img/avatar-me.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
