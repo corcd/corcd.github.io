@@ -14,22 +14,44 @@ comments: true
         background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')
     }
 
-        {% if page.header-mask %}
-
+    {% if page.header-mask %}
     header.intro-header .header-mask {
         width: 100%;
         height: 100%;
         position: absolute;
-        background: rgba(0,
-        0,
-        0,
-            {
-                {
-                page.header-mask
-            }
-        }
-        );
-    }{% endif %}
+        background: rgba(0,0,0,{{page.header-mask}});
+    }
+    {% endif %}
+
+    header.intro-header .article-count {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        font-style: normal;
+	    font-variant: normal;
+    }
+</style>
+<!-- Post Article -->
+<style>
+    .container{
+        overflow: hidden;
+    }
+</style>
+<!-- Post Catalog -->
+<style>
+    .outer-container {
+        position: relative;
+        overflow: hidden;
+    }
+    .inner-container {
+        position: absolute;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+ 
+    /* for Chrome */
+    .inner-container::-webkit-scrollbar {
+        display: none;
+    }
 </style>
 <header class="intro-header">
     <div class="header-mask"></div>
@@ -41,6 +63,7 @@ comments: true
                         {% for tag in page.tags %}
                         <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
                         {% endfor %}
+                        <a class="tag-count"><span id="busuanzi_container_site_pv" class="article-count"> 阅读量 <span id="busuanzi_value_site_pv"></span></span></a>
                     </div>
                     <h1>{{ page.title }}</h1>
                     {% comment %} always create a h2 for keeping the margin , Hux {% endcomment %} {% comment %} if page.subtitle {% endcomment
@@ -108,18 +131,20 @@ comments: true
             </div>
 
             <!-- Side Catalog Container -->
-            {% if page.catalog %}
+            {% if page.catalog %}               
             <div class="
                 col-lg-2 col-lg-offset-0
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
+                <div class="outer-container"> 
+                <div class="side-catalog inner-container">
                     <hr class="hidden-sm hidden-xs">
                     <h5>
                         <a class="catalog-toggle" href="#">CATALOG</a>
                     </h5>
                     <ul class="catalog-body"></ul>
+                </div>
                 </div>
             </div>
             {% endif %}

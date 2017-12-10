@@ -5,7 +5,7 @@ subtitle:     "快速入门 Git 简单应用"
 date:         2017-10-23
 author:       "corcd"
 header-img:   "img/post-bg-git.jpg"
-header-mask:  0.3
+header-mask:  0.05
 catalog:      true
 tags:
     - 技术

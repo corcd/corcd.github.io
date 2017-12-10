@@ -5,7 +5,7 @@ subtitle:     "新入树莓派的坑，一步一个脚印自己趟过去"
 date:         2017-10-31
 author:       "corcd"
 header-img:   "img/post-bg-Raspberry.jpg"
-header-mask:  0.3
+header-mask:  0.05
 catalog:      true
 tags:
     - Raspberry Pi
