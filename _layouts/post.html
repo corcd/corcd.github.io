@@ -63,7 +63,7 @@ comments: true
                         {% for tag in page.tags %}
                         <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
                         {% endfor %}
-                        <a class="tag-count">阅读量<span class="article-count" data-hk-page="{{ page.url | prepend: site.url | replace: '//', '/' }}"> - {{ page.url | prepend: site.url }}</span></a>
+                        <a class="tag-count">阅读量 <span class="article-count" data-hk-page="{{ page.url | prepend: site.url }}"> - </span></a>
                     </div>
                     <h1>{{ page.title }}</h1>
                     {% comment %} always create a h2 for keeping the margin , Hux {% endcomment %} {% comment %} if page.subtitle {% endcomment
@@ -176,9 +176,6 @@ comments: true
         </div>
     </div>
 </article>
-
-<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script>
-<script src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-lc-0.2.0.js"></script>
 
 {% if site.disqus_username %}
 <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
