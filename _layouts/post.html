@@ -63,7 +63,9 @@ comments: true
                         {% for tag in page.tags %}
                         <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
                         {% endfor %}
-                        <a class="tag-count">阅读量 <span class="article-count" data-hk-page="{{ page.url | prepend: site.url }}"> - </span></a>
+                        <a class="tag-count"><span class="article-count" id="busuanzi_container_page_pv">
+                            阅读量 <span id="busuanzi_value_page_pv"></span> 次
+                          </span></a>
                     </div>
                     <h1>{{ page.title }}</h1>
                     {% comment %} always create a h2 for keeping the margin , Hux {% endcomment %} {% comment %} if page.subtitle {% endcomment
