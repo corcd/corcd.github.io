@@ -144,7 +144,7 @@ ionViewDidEnter() {
 
 #### 基于 TypeScript 转化改写 AMap ES5 代码
 
-1.  AMap 主体异步加载（非服务方式）
+1. AMap 主体异步加载（非服务方式）
 
 ```ts
 public map:any = null;
