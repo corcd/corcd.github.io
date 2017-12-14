@@ -17,13 +17,13 @@ tags:
 
 ## 遇到的问题
 
-1. AMap 在 ionic 项目中加载调用
+###### 1. AMap 在 ionic 项目中加载调用
 
-2. AMap 的点聚合及点筛选的实现
+###### 2. AMap 的点聚合及点筛选的实现
 
-3. AMap extData 属性如何使用
+###### 3. AMap extData 属性如何使用
 
-4. 基于 TypeScript 部署项目中 this 指针丢失
+###### 4. 基于 TypeScript 部署项目中 this 指针丢失
 
 当我在主页面的 Home.ts 中添加了一个 `AlertController` 提示框组件，并且在 class HomePage 的构造函数中声明赋值给 public alertCtrl 对象，然后我开始尝试在页面中通过特定的方式调用显示提示框。
 
@@ -138,13 +138,13 @@ ionViewDidEnter() {
 
 不过，这样真的好吗？虽然问题已经被解决，但是还是有一种偷鸡的感觉，应该还有更加根本解决问题的方法，有待深入探究。
 
-5. ...
+###### 5. 待续...
 
 ## 施工中的：
 
 #### 基于 TypeScript 转化改写 AMap ES5 代码
 
-1. AMap 主体异步加载（非服务方式）
+###### 1. AMap 主体异步加载（非服务方式）
 
 ```ts
 public map:any = null;
@@ -165,7 +165,7 @@ ionViewDidLoad() {
 }
 ```
 
-2. AMap 主体异步加载（集成服务方式）
+###### 2. AMap 主体异步加载（集成服务方式）
 
 ```ts
 /***
