@@ -1,0 +1,35 @@
+---
+layout:       post
+title:        "ionic 与高德地图的难解之题"
+subtitle:     "记录 ionic3.x 项目开发过程中与高德地图碰撞产生的不少坑"
+date:         2017-12-15
+author:       "corcd"
+header-img:   null
+header-mask:  0.05
+catalog:      true
+tags:
+    - 技术
+    - ionic
+    - AMap
+---
+
+# 前言
+
+# 遇到的问题
+
+1. AMap 在 ionic 项目中加载调用
+
+2. AMap 的点聚合及点筛选的实现
+
+3. 基于 TypeScript 部署项目中 this 指针丢失
+
+4. AMap extData 属性如何使用
+
+
+# 施工中的：基于 TypeScript 转化改写 AMap ES5 代码
+
+###  AMap 主体异步加载（非服务方式）
+
+### AMap 主体异步加载（集成服务方式）
+
+# 未完待续

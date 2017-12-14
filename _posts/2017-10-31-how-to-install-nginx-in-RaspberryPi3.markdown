@@ -8,8 +8,8 @@ header-img:   "img/post-bg-Raspberry.jpg"
 header-mask:  0.05
 catalog:      true
 tags:
+    - 技术
     - Raspberry Pi
-    - Linux
 ---
 
 # 故事还得从开始讲起

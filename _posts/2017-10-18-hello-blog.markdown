@@ -9,7 +9,6 @@ header-mask:  0.05
 catalog:      true
 tags:
     - 生活
-    - Blog
 ---
 
 > “Yeah It's On. ”
