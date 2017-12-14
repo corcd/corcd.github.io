@@ -1,7 +1,7 @@
 ---
 layout:       post
 title:        "ionic 与高德地图的难解之题"
-subtitle:     "记录 ionic3.x 项目开发过程中与高德地图碰撞产生的不少坑"
+subtitle:     "记录 ionic3.x 项目开发过程中与高德地图 AMap 碰撞产生的不少坑"
 date:         2017-12-15
 author:       "corcd"
 header-img:   null
@@ -13,23 +13,227 @@ tags:
     - AMap
 ---
 
-# 前言
+## 前言
 
-# 遇到的问题
+## 遇到的问题
 
 1. AMap 在 ionic 项目中加载调用
 
 2. AMap 的点聚合及点筛选的实现
 
-3. 基于 TypeScript 部署项目中 this 指针丢失
+3. AMap extData 属性如何使用
 
-4. AMap extData 属性如何使用
+4. 基于 TypeScript 部署项目中 this 指针丢失
 
+当我在主页面的 Home.ts 中添加了一个 `AlertController` 提示框组件，并且在 class HomePage 的构造函数中声明赋值给 public alertCtrl 对象，然后我开始尝试在页面中通过特定的方式调用显示提示框。
 
-# 施工中的：基于 TypeScript 转化改写 AMap ES5 代码
+**HTML:**
+```html
+<ion-content>
+  <div padding>
+    <button ion-button block color="dark" (click)="showAlert()">Show Basic Alert</button>
+  </div>
+</ion-content>
+```
 
-###  AMap 主体异步加载（非服务方式）
+**TS:**
+```ts
+export class AboutPage {
 
-### AMap 主体异步加载（集成服务方式）
+    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
-# 未完待续
+    }
+
+    showAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'New Friend!',
+            subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
+            buttons: ['OK']
+        });
+        alert.present();
+    }
+}
+```
+
+这种最基础形式的调用没有遇到任何问题，我开始尝试将提示框与 AMap 的功能结合一起，很快便遇到了问题。
+
+```ts
+function markerClick(e) {
+    map.setFitView();
+
+    //Alert 消息弹窗
+    let alert = this.alertCtrl.create({
+        title: 'Infomation',
+        subTitle: Pin.getExtData(),
+        buttons: ['OK']
+    });
+    alert.present();
+
+    infoWindow.setContent(Pin.getExtData());
+    infoWindow.open(map, Pin.getPosition());
+    }
+```
+
+我的预期是在地图上声明为 Pin 的 Marker 对象被点击时，弹出 alert 提示框显示 Pin 的用户自定义属性。遗憾的是，console 控制台很无情地给了我一个 create is not a function 的 ERR 错误提示。好吧，问题就出在了这里，略显笨笨的 js 将原先指向 class HomePage 的 this 指针搞丢了，此时函数内的 this 指针，取而代之指向的是 function markerClick(e) 函数本身。
+
+既然定位了问题，就马上着手修改代码。
+
+```ts
+ionViewDidEnter() {
+    let alert = this.alertCtrl.create({
+        title: 'Infomation',
+        subTitle: Pin.getExtData(),
+        buttons: ['OK']
+    });
+
+    ...
+
+    function markerClick(e) {
+        map.setFitView();
+
+        //Alert 消息弹窗
+        alert.present();
+
+        infoWindow.setContent(Pin.getExtData());
+        infoWindow.open(map, Pin.getPosition());
+    }
+}
+```
+
+指针在 function markerClick(e) 内部丢失，那我希望可以通过将 let alert 的语句提出到 function markerClick(e) 函数体外部来规避指针丢失问题，好消息是第一次 Alert 提示框成功地工作显示了正确信息，不过还有一个坏消息，第二次点击时就报错：view was destroyed。在 Google 了一些类似的资料以后，我找到了真正的问题所在。简单地说，当我把函数传入 alertCtrl 一瞬间，你就丢失了this，第一次显示成功是因为指针在传入前还是正确的，但是后续的操作因为指针已经变更，因此 view 销毁失效。
+
+那么，我在外部定义一个恒定的正确的指针是不是就可以真正解决这个问题呢？
+
+**方法一：传统**
+```ts
+ionViewDidEnter() {
+    var self = this;  
+
+    ...
+
+    function markerClick(e) {
+        map.setFitView();
+
+        //Alert 消息弹窗
+        let alert = self.alertCtrl.create({
+            title: 'Infomation',
+            subTitle: Pin.getExtData(),
+            buttons: ['OK']
+        });
+        alert.present();
+
+        infoWindow.setContent(Pin.getExtData());
+        infoWindow.open(map, Pin.getPosition());
+    }
+}
+```
+
+运行下试试，很完美的取得了我预期的效果！
+
+我在页面的 ionViewDidEnter 周期头部事先保存了this指针，然后在需要部分中使用
+
+不过，这样真的好吗？虽然问题已经被解决，但是还是有一种偷鸡的感觉，应该还有更加根本解决问题的方法，有待深入探究。
+
+5. ...
+
+## 施工中的：
+
+#### 基于 TypeScript 转化改写 AMap ES5 代码
+
+1.  AMap 主体异步加载（非服务方式）
+```ts
+public map:any = null;
+
+initMap() {
+    this.map = new AMap.Map(this.map_container.nativeElement, {
+        mapStyle: 'amap://styles/45f13eb0ee5aa9cf0a01e92293754bdd',
+        view: new AMap.View2D({ //创建地图二维视口
+        //position:, 默认为中心点
+        zoom: 10, //设置地图缩放级别
+        resizeEnable: true
+        }),
+    });
+}
+
+ionViewDidLoad() {
+    initMap();
+}
+```
+
+2. AMap 主体异步加载（集成服务方式）
+```ts
+/***
+   * 加载js,动态创建dom到页面
+   * @returns {Promise}
+   */
+  private loadAMapApi():Promise<any> {
+    console.log("loadAMapApi");
+    const _loadScript = () => {
+      const script = document.createElement('script');
+      script.src = `http://webapi.amap.com/maps?v=1.3&key=9b609d0c567e025de28f3e8bf4aa5f3f&callback=initMap`;
+      script.type = 'text/javascript';
+      script.async = true;
+      const s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(script, s);
+    };
+
+    return new Promise((resolve:Function) => {
+      (<any>window).initMap = () => {
+        console.log("initMap success");
+        return resolve();
+      };
+      _loadScript();
+    });
+  }
+
+  /***
+   * 异步加载高德地图
+   * @returns {Promise}
+   */
+  private loadMap():Promise<any> {
+    console.log("loadMap");
+    return new Promise((resolve:Function, reject:Function) => {
+      if ((<any>window).AMap) {
+        resolve();
+      } else {
+        console.log("window no AMap");
+        this.loadAMapApi().then(() => resolve()).catch(error => {
+          reject(error);
+        });
+      }
+    });
+  }
+
+  /***
+   * 创建地图
+   * @returns {Promise}
+   */
+  public createMap(mapEl:Element, opts:IMapOptions = {
+    lat: MapConst.DEFAULT_LAT,
+    lon: MapConst.DEFAULT_LNG,
+    zoom: MapConst.DEFAULT_ZOOM
+  }):Promise<any> {
+    this.element = mapEl;
+    console.log("createMap...");
+
+    return new Promise((resolve:Function, reject:Function) => {
+      this.loadMap().then(() => {
+        console.log("loadMap success");
+        var map = new AMap.Map(mapEl, {
+          resizeEnable: true,
+          zoom: opts.zoom,
+          center: [opts.lon, opts.lat]
+        });
+
+        this.map = map;
+        resolve(this.map);
+
+      }).catch(error => {
+        reject(error);
+        console.log(error);
+      });
+    });
+  }
+```
+
+## 未完待续
