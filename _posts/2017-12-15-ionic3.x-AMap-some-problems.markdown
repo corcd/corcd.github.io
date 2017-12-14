@@ -25,7 +25,7 @@ tags:
 
 ###### 4. 基于 TypeScript 部署项目中 this 指针丢失
 
-当我在主页面的 Home.ts 中添加了一个 `AlertController` 提示框组件，并且在 class HomePage 的构造函数中声明赋值给 public alertCtrl 对象，然后我开始尝试在页面中通过特定的方式调用显示提示框。
+当我在主页面的 `Home.ts` 中添加了一个 `AlertController` 提示框组件，并且在 `class HomePage` 的构造函数中声明赋值给 `alertCtrl` 对象，然后我开始尝试在页面中通过特定的方式调用显示提示框。
 
 **HTML:**
 ```html
@@ -59,7 +59,7 @@ export class AboutPage {
 }
 ```
 
-这种最基础形式的调用没有遇到任何问题，我开始尝试将提示框与 AMap 的功能结合一起，很快便遇到了问题。
+这种最基础形式的调用没有遇到任何问题，我开始尝试将提示框与 `AMap` 的功能结合一起，很快便遇到了问题。
 
 ```ts
 function markerClick(e) {
@@ -78,7 +78,7 @@ function markerClick(e) {
     }
 ```
 
-我的预期是在地图上声明为 Pin 的 Marker 对象被点击时，弹出 alert 提示框显示 Pin 的用户自定义属性。遗憾的是，console 控制台很无情地给了我一个 create is not a function 的 ERR 错误提示。好吧，问题就出在了这里，略显笨笨的 js 将原先指向 class HomePage 的 this 指针搞丢了，此时函数内的 this 指针，取而代之指向的是 function markerClick(e) 函数本身。
+我的预期是在地图上声明为 `Pin` 的 `Marker` 对象被点击时，弹出 `Alert 提示框`显示 `Pin` 的用户自定义属性。遗憾的是，`console` 很无情地给了我一个 `create is not a function` 的 ERR 错误提示。好吧，问题就出在了这里，略显笨笨的 js 将原先指向 `class HomePage` 的 `this` 指针搞丢了，此时函数内的 `this` 指针，取而代之指向的是 `function markerClick(e)` 函数本身。
 
 既然定位了问题，就马上着手修改代码。
 
@@ -104,7 +104,7 @@ ionViewDidEnter() {
 }
 ```
 
-指针在 function markerClick(e) 内部丢失，那我希望可以通过将 let alert 的语句提出到 function markerClick(e) 函数体外部来规避指针丢失问题，好消息是第一次 Alert 提示框成功地工作显示了正确信息，不过还有一个坏消息，第二次点击时就报错：view was destroyed。在 Google 了一些类似的资料以后，我找到了真正的问题所在。简单地说，当我把函数传入 alertCtrl 一瞬间，你就丢失了this，第一次显示成功是因为指针在传入前还是正确的，但是后续的操作因为指针已经变更，因此 view 销毁失效。
+指针在 `function markerClick(e)` 内部丢失，那我希望可以通过将 `let alert` 的语句提出到 `function markerClick(e)` 函数体外部来规避指针丢失问题，好消息是第一次 `Alert 提示框`成功地工作显示了正确信息，不过还有一个坏消息，第二次点击时就报错：`view was destroyed`。在 Google 了一些类似的资料以后，我找到了真正的问题所在。简单地说，当我把函数传入 `alertCtrl` 一瞬间，就丢失了 `this`，第一次显示成功是因为指针在传入前还是正确的，但是后续的操作因为指针已经变更，因此 `view` 销毁失效。
 
 那么，我在外部定义一个恒定的正确的指针是不是就可以真正解决这个问题呢？
 
@@ -134,7 +134,7 @@ ionViewDidEnter() {
 
 运行下试试，很完美的取得了我预期的效果！
 
-我在页面的 ionViewDidEnter 周期头部事先保存了this指针，然后在需要部分中使用
+我在页面的 `ionViewDidEnter` 周期头部事先保存了 `this` 指针，然后在需要部分中使用
 
 不过，这样真的好吗？虽然问题已经被解决，但是还是有一种偷鸡的感觉，应该还有更加根本解决问题的方法，有待深入探究。
 
