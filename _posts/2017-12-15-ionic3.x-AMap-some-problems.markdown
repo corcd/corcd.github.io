@@ -104,9 +104,9 @@ ionViewDidEnter() {
 }
 ```
 
-指针在 `function markerClick(e)` 内部丢失，那我希望可以通过将 `let alert` 的语句提出到 `function markerClick(e)` 函数体外部来规避指针丢失问题，好消息是第一次 `Alert 提示框`成功地工作显示了正确信息，不过还有一个坏消息，第二次点击时就报错：`view was destroyed`。在 Google 了一些类似的资料以后，我找到了真正的问题所在。简单地说，当我把函数传入 `alertCtrl` 一瞬间，就丢失了 `this`，第一次显示成功是因为指针在传入前还是正确的，但是后续的操作因为指针已经变更，因此 `view` 销毁失效。
+指针在 `function markerClick(e)` 内部丢失，那我希望可以通过将 `let alert` 的语句提出到 `function markerClick(e)` 函数体外部来规避指针丢失问题，好消息是第一次 `Alert 提示框`成功地工作显示了正确信息，不过还有一个坏消息，第二次点击时就报错：`view was destroyed`。在 Google 了一些类似的资料以后，问题找到了： AlertController 类同 LoadingController ，都是需要当次调用当次创建当次销毁，不要创建实例的。我之前的处理是先创建了一个 AlertController 实例，然后在需要时调用，因此提示 `view` 已销毁而失效。
 
-那么，我在外部定义一个恒定的正确的指针是不是就可以真正解决这个问题呢？
+那么，我在外部定义一个恒定的正确的指针，同时修改成在使用时创建实例，是不是就可以真正解决这个问题呢？
 
 **方法一：传统**
 ```ts
@@ -134,7 +134,7 @@ ionViewDidEnter() {
 
 运行下试试，很完美的取得了我预期的效果！
 
-我在页面的 `ionViewDidEnter` 周期头部事先保存了 `this` 指针，然后在需要部分中使用
+我在页面的 `ionViewDidEnter` 周期头部事先保存了 `this` 指针，然后在需要部分中使用.
 
 不过，这样真的好吗？虽然问题已经被解决，但是还是有一种偷鸡的感觉，应该还有更加根本解决问题的方法，有待深入探究。
 
