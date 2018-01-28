@@ -8,7 +8,7 @@ header-img:   "img/post-bg-Raspberry.jpg"
 header-mask:  0.05
 catalog:      true
 tags:
-    - 技术
+    - 总结
     - Raspberry Pi
 ---
 

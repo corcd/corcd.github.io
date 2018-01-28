@@ -9,6 +9,7 @@ header-mask:  0.05
 catalog:      true
 tags:
     - 总结
+    - Raspberry Pi
     - 魔镜计划
     - opencv
 ---
