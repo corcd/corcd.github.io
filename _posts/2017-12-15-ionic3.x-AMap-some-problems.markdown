@@ -4,7 +4,7 @@ title:        "ionic 与高德地图的难解之题"
 subtitle:     "记录 ionic3.x 项目开发过程中与高德地图 AMap 碰撞产生的不少坑"
 date:         2017-12-15
 author:       "corcd"
-header-img:   "post-bg-ionic3.jpg"
+header-img:   "img/post-bg-ionic3.jpg"
 header-mask:  0.05
 catalog:      true
 tags:
