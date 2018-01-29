@@ -13,7 +13,22 @@ layout: default
   <title>Corcd - Proposed Project Questionnaire</title>
   <link rel="stylesheet" type="text/css" href="css/PPQ.css" />
   <script src="js/modernizr.custom.js"></script>
-  <script type="text/javascript">
+</head>
+
+<body>
+  <div class="container" style="margin:0;padding:0;width:100%;">
+    <header>
+      <img width="175" height="175" style="border-radius:50%;" src="/img/avatar-me.jpg">
+      <h1>Project Questionnaire</h1>
+    </header>
+    <div class="main">
+      <div id="PPQ">
+
+	  </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
 	var iswjxsafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 	if (iswjxsafari && window.location.href.toLowerCase().indexOf("wjxsafari") == -1) { //safaricookie
 	  window.location.href = "https://www.wjx.cn/jq/20465779.aspx";
@@ -35,7 +50,7 @@ layout: default
 	  var iframeId = 'wjxiframe_20465779';
 	  var hasHeight = 0;
 	  if (!hasHeight) {
-		var resize = document.createElement('main');
+		var resize = document.createElement('PPQ');
 		resize.type = 'text/javascript';
 		script = "window.WjxData = {};\n" +
 		  "WjxData.receiveSize = function (e) {\n" +
@@ -57,18 +72,4 @@ layout: default
 		"' width='100%' height='400' frameborder=0 allowTransparency='true'>";
 	}
   </script>
-</head>
-
-<body>
-  <div class="container" style="margin:0;padding:0;width:100%;">
-    <header>
-      <img width="175" height="175" style="border-radius:50%;" src="/img/avatar-me.jpg">
-      <h1>Project Questionnaire</h1>
-    </header>
-    <div class="main">
-      
-    </div>
-  </div>
-</body>
-
 </html>
