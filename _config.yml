@@ -67,7 +67,7 @@ disqus_username: corcd
 
 # Google Analytics
 ga_track_id: 'UA-108349396-1'            # Format: UA-xxxxxx-xx
-ga_domain: https://corcd.github.io/
+ga_domain: http://corcd.xyz/
 
 
 

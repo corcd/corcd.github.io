@@ -22,54 +22,9 @@ layout: default
       <h1>Project Questionnaire</h1>
     </header>
     <div class="main">
-      <div id="PPQ">
 
-	  </div>
     </div>
   </div>
 </body>
-<script type="text/javascript">
-	var iswjxsafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-	if (iswjxsafari && window.location.href.toLowerCase().indexOf("wjxsafari") == -1) { //safaricookie
-	  window.location.href = "https://www.wjx.cn/jq/20465779.aspx";
-	}
-	var scripts = document.getElementsByTagName("script");
-	var target = null;
-	var script;
-	var matchedUrl = "https://www.wjx.cn/jq/20465779,i,t.aspx?width=760&source=iframe";
-	var scriptURL = '/handler/jqemed.ashx?activity=20465779';
-	for (var i = 0; i < scripts.length; i++) {
-	  script = scripts[i];
-	  if (script.src.indexOf(scriptURL) > -1) {
-		target = script.parentNode;
-		target.removeChild(script);
-		break;
-	  }
-	}
-	if (target != null && matchedUrl != null) {
-	  var iframeId = 'wjxiframe_20465779';
-	  var hasHeight = 0;
-	  if (!hasHeight) {
-		var resize = document.createElement('PPQ');
-		resize.type = 'text/javascript';
-		script = "window.WjxData = {};\n" +
-		  "WjxData.receiveSize = function (e) {\n" +
-		  " if(!e.data)return;if(!e.data.split)return;var dataArray=e.data.split(',');\n" +
-		  "  if (dataArray[0] == 'heightChanged') { \n" +
-		  "    document.getElementById('" + iframeId + "').style.height = dataArray[1] + 'px';\n" +
-		  "    if(window.wjxHeightChanged) wjxHeightChanged(dataArray[1]);\n" +
-		  "  }\n" +
-		  "};\n" +
-		  "if (window.addEventListener) {\n" +
-		  "  window.addEventListener('message', WjxData.receiveSize, false);\n" +
-		  "} else if (window.attachEvent) {\n" +
-		  "  window.attachEvent('onmessage', WjxData.receiveSize, false);\n" +
-		  "}";
-		resize.text = script;
-		target.appendChild(resize);
-	  }
-	  target.innerHTML += "<iframe id='" + iframeId + "' src='" + matchedUrl +
-		"' width='100%' height='400' frameborder=0 allowTransparency='true'>";
-	}
-  </script>
+<script type="text/javascript" src="https://www.wjx.cn/handler/jqemed.ashx?activity=20465779&width=760&source=iframe&tm=1&height=2971"></script>
 </html>
