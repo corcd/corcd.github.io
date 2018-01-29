@@ -25,11 +25,6 @@ layout: default
       <script type="text/javascript">
         var iswjxsafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if (iswjxsafari && window.location.href.toLowerCase().indexOf("wjxsafari") == -1) { //safaricookie
-          var loc = window.location.href;
-          if (loc.indexOf("?") > -1) {
-            loc += "&wjxsafari=1";
-          } else
-            loc += "?wjxsafari=1";
           window.location.href = "https://www.wjx.cn/jq/20465779.aspx";
         }
         var scripts = document.getElementsByTagName("script");
