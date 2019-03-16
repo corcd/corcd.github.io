@@ -9,8 +9,8 @@ header-mask:  0.05
 catalog:      true
 tags:
     - 技术
-    - ionic
-    - AMap
+    - 前端
+    - Ionic
 ---
 
 ## 前言

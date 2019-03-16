@@ -8,6 +8,7 @@ header-img:   null
 header-mask:  0.05
 catalog:      true
 tags:
+    - 技术
     - 前端
     - JavaScript
 ---

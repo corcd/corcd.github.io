@@ -8,7 +8,7 @@ header-img:   "img/post-bg-git.jpg"
 header-mask:  0.05
 catalog:      true
 tags:
-    - 总结
+    - 技术
     - Git
 ---
 
