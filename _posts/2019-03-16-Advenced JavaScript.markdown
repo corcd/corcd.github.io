@@ -19,38 +19,38 @@ Javascript在浏览器中的性能，可以说是前端开发者所要面对的�
 从基本层面说,这意味着<script>标签的出现使整个页面因脚本解析、运行而出现等待。不论实际的 JavaScript 代码是内联的还是包含在一个不相干的外部文件中,页面下载和解析过程必须停下,等待脚本 完成这些处理,然后才能继续。这是页面生命周期必不可少的部分,因为脚本可能在运行过程中修改页面 内容。典型的例子是 document.write()函数,例如:
 
 ```
- 1 <html>
- 2   <head>
- 3     <title>Script Example</title>
- 4   </head> 
- 5   
- 6   <body>
- 7      <p>
- 8         <script type="text/javascript">
- 9            document.write("The date is " + (new Date()).toDateString());
-10         </script> 
-11      </p>
-12   </body> 
-13 </html>  　
+<html>
+  <head>
+    <title>Script Example</title>
+  </head> 
+  
+  <body>
+     <p>
+        <script type="text/javascript">
+           document.write("The date is " + (new Date()).toDateString());
+        </script> 
+     </p>
+  </body> 
+</html>  　
 ```
 当浏览器遇到一个<script>标签时,正如上面 HTML 页面中那样,无法预知 JavaScript 是否在<p>标签中 添加内容。因此,浏览器停下来,运行此 JavaScript 代码,然后再继续解析、翻译页面。同样的事情发生 在使用 src 属性加载 JavaScript 的过程中。浏览器必须首先下载外部文件的代码,这要占用一些时间,然后 解析并运行此代码。此过程中,页面解析和用户交互是被完全阻塞的。 　　
 
 因为脚本阻塞其他页面资源的下载过程,所以推荐的办法是:将所有<script>标签放在尽可能接近<body> 标签底部的位置,尽量减少对整个页面下载的影响。例如:
 ```
- 1 <html>
- 2   <head>
- 3     <title>Script Example</title>
- 4     <link rel="stylesheet" type="text/css" href="styles.css"> 
- 5   </head>
- 6   
- 7   <body>
- 8     <p>Hello world!</p>
- 9     <-- Example of recommended script positioning --> 
-10       <script type="text/javascript" src="file1.js"></script> 
-11       <script type="text/javascript" src="file2.js"></script> 
-12       <script type="text/javascript" src="file3.js"></script>
-13   </body> 
-14 </html>
+<html>
+  <head>
+    <title>Script Example</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"> 
+  </head>
+  
+  <body>
+    <p>Hello world!</p>
+    <-- Example of recommended script positioning --> 
+      <script type="text/javascript" src="file1.js"></script> 
+      <script type="text/javascript" src="file2.js"></script> 
+      <script type="text/javascript" src="file3.js"></script>
+  </body> 
+</html>
 ```
 此代码展示了所推荐的<script>标签在 HTML 文件中的位置。尽管脚本下载之间互相阻塞,但页面已经 下载完成并且显示在用户面前了,进入页面的速度不会显得太慢。这就是上面提到的将JS放到底部。
 
