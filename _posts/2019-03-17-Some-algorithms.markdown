@@ -118,6 +118,7 @@ function insertSort(arr) {
         j--
       }
       arr[j+1] = temp
+      console.log(`第${i}趟排序后的顺序: ${arr}`)
     }
     return arr
   }
@@ -126,6 +127,13 @@ function insertSort(arr) {
 
   console.log(insertSort(sortArr))  // [ 2, 3, 4, 5, 6, 10, 11 ]
 ```
+
+- 第1趟排序后的顺序: 3,6,4,2,11,10,5
+- 第2趟排序后的顺序: 3,4,6,2,11,10,5
+- 第3趟排序后的顺序: 2,3,4,6,11,10,5
+- 第4趟排序后的顺序: 2,3,4,6,11,10,5
+- 第5趟排序后的顺序: 2,3,4,6,10,11,5
+- 第6趟排序后的顺序: 2,3,4,5,6,10,11
 
 ##### 二分插入排序
 ```
@@ -159,6 +167,8 @@ console.log(insertSort(arr))
 
 ##### 希尔排序
 
+```
+```
 
 ##### 时间复杂度和空间复杂度
 - 如果序列是完全有序的，插入排序只要比较 n 次，无需移动，时间复杂度为 O(n)
@@ -276,42 +286,55 @@ console.log(sort(arr, 0, arr.length - 1))
 3. 对”基准”左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止
 
 ```
-function partition(arr, left, right) {
-  let i = left,
-    j = right,
-    temp = arr[left]
-  while (i < j) {
-    while (i < j && arr[j] > temp) {
-      j--
+function quickSort(arr) {
+    // 交换
+    function swap(arr, a, b) {
+        var temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
-    if (i < j) {
-      arr[i] = arr[j]
-      i++
+
+    // 分区
+    function partition(arr, left, right) {
+        /**
+         * 开始时不知最终pivot的存放位置，可以先将pivot交换到后面去
+         * 这里直接定义最右边的元素为基准
+         */
+        var pivot = arr[right];
+        /**
+         * 存放小于pivot的元素时，是紧挨着上一元素的，否则空隙里存放的可能是大于pivot的元素，
+         * 故声明一个storeIndex变量，并初始化为left来依次紧挨着存放小于pivot的元素。
+         */
+        var storeIndex = left;
+        for (var i = left; i < right; i++) {
+            if (arr[i] < pivot) {
+                /**
+                 * 遍历数组，找到小于的pivot的元素，（大于pivot的元素会跳过）
+                 * 将循环i次时得到的元素，通过swap交换放到storeIndex处，
+                 * 并对storeIndex递增1，表示下一个可能要交换的位置
+                 */
+                swap(arr, storeIndex, i);
+                storeIndex++;
+            }
+        }
+        // 最后： 将pivot交换到storeIndex处，基准元素放置到最终正确位置上
+        swap(arr, right, storeIndex);
+        return storeIndex;
     }
-    while (i < j && arr[i] < temp) {
-      i++
+
+    function sort(arr, left, right) {
+        if (left > right) return;
+
+        var storeIndex = partition(arr, left, right);
+        sort(arr, left, storeIndex - 1);
+        sort(arr, storeIndex + 1, right);
     }
-    if (i < j) {
-      arr[j] = arr[i]
-      j--
-    }
-    console.log(i, ' ', j, ' ', temp, arr)
-  }
-  arr[i] = temp
-  return i
+
+    sort(arr, 0, arr.length - 1);
+    return arr;
 }
 
-function quickSort(arr, left, right) {
-  if (left < right) {
-    let index = partition(arr, left, right) // 分区，找到一个基点
-    quickSort(arr, left, index - 1)
-    quickSort(arr, index + 1, right)
-  }
-  return arr
-}
-
-var arr = [20, 40, 30, 10, 60, 50]
-console.log(quickSort(arr, 0, arr.length - 1)) // [10, 20, 30, 40, 50, 60]
+console.log(quickSort([8, 4, 90, 8, 34, 67, 1, 26, 17]));
 ```
 
 ##### 时间复杂度
@@ -392,9 +415,85 @@ console.log(heapSort(arr)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 ## 查找算法
 
+#### 顺序查找
+
+##### 说明
+顺序查找适合于存储结构为顺序存储或链接存储的线性表
+
+##### 基本思想
+顺序查找也称为线形查找，属于无序查找算法。从数据结构线形表的一端开始，顺序扫描，依次将扫描到的结点关键字与给定值k相比较，若相等则表示查找成功；若扫描结束仍没有找到关键字等于k的结点，表示查找失败
+
+```
+/**
+ * 
+ * @param {被查找数组} arr 
+ * @param {查找的关键值} value 
+ *
+ */
+function SequenceSearch(arr, value){
+    for(let i = 0; i < arr.length; i++){
+        if (arr[i] == value){
+            return i;
+        }
+    }
+    return - 1;
+}
+```
+
+##### 时间复杂度
+时间复杂度为O(n)
+
 #### 二分查找
+
+##### 基本思想
+也称为折半查找————首先要找到一个中间值，通过与中间值比较，大的放又，小的放在左边。再在两边中寻找中间值，持续以上操作，直到找到所在位置为止；找不到返回false
+
 ```
+// 递归
+function binarySearch(data, dest, start, end){
+    var end = end || data.length - 1;
+    var start = start || 0;
+    var m = Math.floor((start + end) / 2);
+
+    //直接命中
+    if (data[m] == dest){
+        return m;
+    }
+
+    if (data[m] > dest){     // 放左
+        end = m - 1;
+        return binarySearch(data, dest, start, end);
+    }else{         // 放右
+        start = m + 1;
+        return binarySearch(data, dest, start, end);
+    }
+    return false;
+}
+
+// 非递归 用while
+//代码中的判断条件必须是while (left <= right)，
+//否则的话判断条件不完整，比如：array[3] = {1, 3, 5};
+//待查找的键为5，此时在(low < high)条件下就会找不到，因为low和high相等时，指向元素5，但是此时条件不成立，没有进入while()中
+
+function binarySearch2(data, dest){
+    var end = data.length - 1;
+    var start = 0;
+    while(start <= end){
+        var m = Math.floor((end + 1) / 2);
+        if(data[m] == dest){
+            return m;
+        }
+        if (data[m] > dest){
+            end = m - 1;
+        }else{
+            start = m + 1;
+        }
+    }
+    return false;
+}
 ```
-#### 查找
+
+##### 时间复杂度
+时间复杂度:O(log2n)
 
 ## 另
