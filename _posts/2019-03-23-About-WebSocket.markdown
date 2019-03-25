@@ -23,8 +23,8 @@ WebSocket 允许服务端主动向客户端推送数据；在 WebSocket API 中�
 
 HTML5 定义的 WebSocket 协议，能更好的**节省服务器资源和带宽**，并且能够更**实时地进行通讯**
 
-![AJAX轮询](http://www.runoob.com/wp-content/uploads/2016/03/ws.png)
-![WebSocket](http://www.runoob.com/wp-content/uploads/2016/03/ws.png)
+![](http://www.runoob.com/wp-content/uploads/2016/03/ws.png)
+
 
 ```
 let Socket = new WebSocket(url, [protocol]);
