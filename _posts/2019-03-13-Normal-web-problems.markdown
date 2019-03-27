@@ -12,29 +12,107 @@ tags:
     - 前端
     - JavaScript
 ---
-
+# JS 业务相关
 ### 不可见缓存图片
-首先利用Image()构造函数来创建一个屏幕外图片对象，之后将该对象的src属性设置期望的URL，由于图片元素并没有添加到文档中，因此它是不可见的，但是浏览器还是会加载图片并将其缓存起来
+##### 思路————预加载：
+常用的是`new Image();`设置其 src 来实现预载，再使用`onload()`方法回调预加载完成事件。只要浏览器把图片下载到本地，src 就会使用缓存，这是最基本的预加载方法；当 image 下载完图片后，会得到宽和高，因此可以在加载前得到图片的大小
 ```
-function preloader(){
-    var imageObj = new Image();
-    var images = ["image1.jpg", "image2.jpg", "image3.jpg"];  //images数组存放的是要缓存的图片的URL路径
-    for(i=0; i < images.length; i++ ){
-        imageObj.src=images[i]  //加载图片到本地客户端
+function loadImage(url,callback) {
+    var img = new Image();
+    
+    img.src = url;
+ 
+    if(img.complete) {  // 如果图片已经存在于浏览器缓存，直接调用回调函数
+        
+        callback.call(img);
+        return; // 直接返回，不用再处理onload事件
+    }
+ 
+    img.onload = function(){
+        img.onload = null;
+        callback.call(img);
     }
 }
 ```
 
-新的思路————预加载：
+##### 其他方法：
+- 单纯的 CSS 实现
+可通过 CSS 的 background 属性将图片预加载到屏幕外的背景上。只要这些图片的路径保持不变，当它们在 Web 页面的其他地方被调用时，浏览器就会在渲染过程中使用预加载（缓存）的图片。简单、高效，不需要任何 JavaScript
+```
+#preload-01 { background: url(http://domain.tld/image-01.png) no-repeat -9999px -9999px; } 
+```
+
+- 单纯的 JS 预加载图片
+```
+<div class="hidden">  
+    <script type="text/javascript">  
+        <!--//--><![CDATA[//><!--  
+            var images = new Array()  
+            function preload() {  
+                for (i = 0; i < preload.arguments.length; i++) {  
+                    images[i] = new Image()  
+                    images[i].src = preload.arguments[i]  
+                }  
+            }  
+            preload(  
+                "http://domain.tld/gallery/image-001.jpg",  
+                "http://domain.tld/gallery/image-002.jpg",  
+                "http://domain.tld/gallery/image-003.jpg"  
+            )  
+        //--><!]]>  
+    </script>  
+</div>
+```
+
+- 使用 Ajax 实现预加载
+```
+window.onload = function() {  
+    setTimeout(function() {  
+        // XHR to request a JS and a CSS  
+        var xhr = new XMLHttpRequest();  
+        xhr.open('GET', 'http://domain.tld/preload.js');  
+        xhr.send('');  
+        xhr = new XMLHttpRequest();  
+        xhr.open('GET', 'http://domain.tld/preload.css');  
+        xhr.send('');  
+        // preload image  
+        new Image().src = "http://domain.tld/preload.png";  
+    }, 1000);  
+};
+```
+
+### 隐藏滚动条
+- 计算滚动条宽度并隐藏起来
+
+- 使用三个容器包围起来，不需要计算滚动条的宽度
+将内容限制在盒子里面了，看不到滚动条同时也可以滚动
+
+- css 隐藏滚动条
+```
+//Chrome 和 Safari
+.element::-webkit-scrollbar { width: 0 !important }
+
+//IE 10+
+.element { -ms-overflow-style: none; }
+
+//Firefox
+.element { overflow: -moz-scrollbars-none; }
+```
+
+# 前端理论
+### 为什么叫层叠样式表
+一个标签的样式可以被多个选择器控制，而不同选择器给出的样式会有不同也会有相同样式属性的冲突，于是就会有优先级问题，以及样式的叠加与覆盖；层叠、级联，即是样式的处理方式
 
 ### 常见的异步编程模型
 - 回调函数
 黑盒情况下无从得知 callback 会几时调用、在什么情况下调用，代码间产生了一定的耦合，流程上也会产生一定的混乱
+
 - 事件监听
 采用事件驱动，执行顺序取决于事件顺序；通过事件解耦，但流程顺序更加混乱
+
 - 链式异步
-解决了异步编程模型的执行流程不清晰的问题，在链条越后位置的方法就越后执行
-`$(document).ready`就是典型，DOMCotentLoaded 是一个事件，在 DOM 并未加载前，jQuery 的大部分操作都不会奏效，但 jQuery 的设计者并没有把他当成事件一样来处理，而是转成一种“选其对象，对其操作”的思路
+解决了异步编程模型的执行流程不清晰的问题，在链条越后位置的方法就越后执行。`$(document).ready`就是典型，DOMCotentLoaded 是一个事件，在 DOM 并未加载前，jQuery 的大部分操作都不会奏效，但 jQuery 的设计者并没有把他当成事件一样来处理，而是转成一种“选其对象，对其操作”的思路
+
 - Deferred & Promise
 CommonJS 中的异步编程模型也延续了这一想法，每一个异步任务返回一个 Promise 对象，该对象有一个 then 方法，允许指定回调函数
 ```
@@ -80,7 +158,7 @@ Web应用的组件化开发；
 严谨地讲，构建（build）和编译（compile）是完全不一样的两个概念。两者的颗粒度不同，compile面对的是单文件的编译，build是建立在compile的基础上，对全部文件进行编译。在很多Java IDE中还有另外一个概念：make。make也是建立在compile的基础上，但是只会编译有改动的文件，以提高生产效率。本文不探讨build、compile、make的深层运行机制，下文所述的前段工程化中构建&编译阶段简称为构建阶段。
 
 
-
+# jQuery 相关
 ### jQuery 中使用 on() 可以绑定多个函数到同一事件，且不会被覆盖
 用 `addEventListener()` 同样可以同一种类型的事件注册多个事件句柄（有别于 onXXX 注册方式），但是 jQuery 内部并没有采用这个方法，为了兼容所有的浏览器和实现事件的委托，设计的极为复杂，使用**数组的方式来存放事件处理函数**，触发事件时遍历这个数组执行
 
@@ -92,7 +170,7 @@ Web应用的组件化开发；
 `ready()` 函数用于在文档进入 ready 状态时执行代码；当 DOM 完全加载（例如 HTML 被完全解析 DOM 树构建完成时），jQuery允许你执行代码（有别于 `window.onload` 事件，onload 需要页面资源完全加载时触发）；使用 `$(document).ready()` 的最大好处在于它适用于所有浏览器，另一个优势是你可以在网页里多次使用它，浏览器会按它们在 HTML 页面里出现的顺序执行它们，相反对于 onload 而言，只能在单一函数里使用
 
 ### jQuery 中 detach() 和 remove() 方法的区别
-尽管 `detach()` 和 `remove()` 方法都被用来移除一个 DOM 元素, 两者之间的主要不同在于 `detach()` 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 `remove()` 方法则会保持过去被移除对象的引用
+尽管 `detach()` （detach：分离）和 `remove()` （remove：移除）方法都被用来移除一个 DOM 元素, 两者之间的主要不同在于 `detach()` 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 `remove()` 方法则会保持过去被移除对象的引用
 
 ### JQuery 阻止事件冒泡的两种方式
 
@@ -112,7 +190,7 @@ $("#div1").mousedown(function(event){
 - `return false` 不仅阻止了事件往上冒泡，而且阻止了事件本身
 - `event.stopPropagation()` 则只阻止事件往上冒泡，不阻止事件本身
 
-
+# 高效算法
 ### Top K 问题
 
 
@@ -136,6 +214,7 @@ var twoSum = function(nums, target){
 
 ### N Sum 问题
 
+# npm 相关
 ### npm 全局安装 & 本地安装、开发依赖和生产依赖
 ##### 全局安装：
 `npm install <pageName> -g  //（这里-g是-global的简写）`
