@@ -13,8 +13,104 @@ tags:
     - JavaScript
 ---
 # JS 业务相关
-### 首屏加载优化
+### Ajax 传递中文乱码问题
+1. js 文件中使用 `encodeURI()` 方法，在后台中对传递的参数进行 `URLDecoder` 解码
 
+```
+前端 -> 后端
+encodeURI(text) //通过 Ajax 数据传递：只需编码一次；通过 URL 传递：需要编码两次
+URLDecoder.decode(query,"utf-8") //都只反编码一次即可
+
+后端 -> 前端
+URLEncoder.encode("中文内容","utf-8") //只需对中文的内容进行编码，如果对整个 json 字符串进行编码，json 中的“”等字符也会被编码导致前端解析json错误
+decodeURI(data.CN) //对应的也只需要对中文进行反编码
+```
+
+2. 统一使用 UTF-8 编码
+
+### 不借助第三个变量交换 A 和 B
+1. 思路：都是让其中一个变量变成一个 a 和 b 都有关系的值，这样可以先改变另一个变量值，最后改变原修改的变量值 
+
+```
+a = a + b
+b = a - b
+a = a - b
+```
+
+2. 思路：通过底层位运算来进行交换变量值 
+
+```
+a ^= b
+b ^= a
+a ^= b
+
+a = (b^=a^=b)^a; //简化
+```
+
+3. 思路：先将 a 变成一个对象，这个对象保存着应该交换后的键值对，最后赋值
+
+```
+a = {a:b,b:a}
+b = a.b
+a = a.a
+```
+
+
+4. 思路：和前一个方法类似，只不过对象换成了数组
+
+```
+a = [a,b]
+b = a[0]
+a = a[1]
+```
+
+
+5. 思路：根据运算符优先级，首先执行 b=a，此时的 b 直接得到了 a 的变量值，然后一步数组索引让 a 得到了 b 的值（妙啊）
+
+```
+a = [b,b=a][0]
+```
+
+6. ES6 解构赋值
+
+```
+[a,b] = [b,a]
+```
+
+### Vue 首屏加载优化
+1. 按需加载模块
+
+2. 基于 DllPlugin 和 DllReferencePlugin 的 webpack 构建优化
+DllPlugin 预编译模块，对项目中基本不变的、固定的模块进行预编译
+
+3. 异步按需加载组件
+
+```
+// before:
+import search from './search.vue'
+{
+    path: '/search',
+    name: 'search',
+    component: search
+}
+
+// after
+const search = resolve => require(['./search.vue'], resolve);
+{
+    path: '/search',
+    name: 'search',
+    component: search
+}
+```
+
+4. 优化组件加载时机
+将组件注册事件写在需要使用组件之前
+
+5. webpack-bundle-analyzer
+
+`npm run build --report` 查看依赖关系，然后再根据具体情况划分代码块
+
+6. 服务器端 gzip
 
 ### 不可见缓存图片
 ##### 思路————预加载：
@@ -169,6 +265,58 @@ Web应用的组件化开发；
 
 
 # jQuery 相关
+### jQuery 中 attr() 和 prop() 原理上的区别
+`prop()` 是针对 Dom 元素属性，`attr()` 针对 HTML 元素属性；`attr()` 是通过 `setAtrribute()` 和 `getAttribute()` 来设置的，使用的是 DOM 属性节点，而 `prop()` 是通过 `document.getElementById(el)[name] = value` 来设置的，是转化为 JS 对象的属性。
+
+##### Attribute 和 Property 的区别
+- Attribute 就是 DOM 节点自带属性，例如我们在 HTML 中常用的 id,class,src,title,alt 等，也可以是用户添加的自定义属性
+
+- 而 Property 则是这个 DOM 元素作为对象，其附加的属性或者内容，例如 childNodes，firstChild 等
+
+##### 两者取值和赋值的区别
+- Attribute 取值和赋值
+
+```
+//attribute 取值
+  getAttribute(attribute)
+  eg:var id = div1.getAttribute('id')
+     var id = div1.getAttribute('title1')
+//attribute 赋值
+  setAttribute(attribute,value)  //value 只能是字符串形式
+  eg:div1.setAttribute('class', 'a')
+     div1.setAttribute('title1', 'asd')  //也可以是自定义属性
+```
+
+- Property 取值和赋值
+
+```
+//通过'.'号获取 property
+  var id = div1.id;
+  var className = div1.className; //相当于div1.getAttribute('class')
+//通过'='赋予 property
+  div1.className = 'a';
+  div1.align = 'center';
+```
+
+##### attr() 和 prop() 区别
+- 针对属性对象不同
+
+`prop()` 是针对 Dom 元素属性，`attr()` 针对 HTML 元素属性，和 attribute 与 property 区别一样
+
+- 用于设置的属性值类型不同
+
+`attr()` 函数操作的是文档节点的属性，因此**设置的属性值只能是字符串类型**，如果不是字符串类型，也会调用其 `toString()` 方法，将其转为字符串类型
+
+`prop()` 函数操作的是 JS 对象的属性，因此设置的属性值可以为包括数组和对象在内的任意类型
+
+- 应用版本不同
+
+`attr()` 是 jQuery 1.0版本就有的函数，`prop()` 是 jQuery 1.6版本新增的函数。毫无疑问，在1.6之前，你只能使用 `attr()` 函数；1.6及以后版本，你可以根据实际需要选择对应的函数
+
+- 其他不同
+
+对于表单元素的 checked、selected、disabled 等属性，在 jQuery 1.6之前，两个的返回结果一样都是 Boolean 类型，但是从1.6开始，使用 `attr()` 获取这些属性的返回值为 String 类型，如果被选中(或禁用)就返回 checked、selected 或 disabled，否则(即元素节点没有该属性)返回 undefined。并且，在某些版本中，这些属性值表示文档加载时的初始状态值，即使之后更改了这些元素的选中(或禁用)状态，对应的属性值也不会发生改变。
+
 ### jQuery 中使用 on() 可以绑定多个函数到同一事件，且不会被覆盖
 用 `addEventListener()` 同样可以同一种类型的事件注册多个事件句柄（有别于 onXXX 注册方式），但是 jQuery 内部并没有采用这个方法，为了兼容所有的浏览器和实现事件的委托，设计的极为复杂，使用**数组的方式来存放事件处理函数**，触发事件时遍历这个数组执行
 
@@ -181,9 +329,6 @@ Web应用的组件化开发；
 
 ### jQuery 中 detach() 和 remove() 方法的区别
 尽管 `detach()` （detach：分离）和 `remove()` （remove：移除）方法都被用来移除一个 DOM 元素, 两者之间的主要不同在于 `detach()` 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 `remove()` 方法则会保持过去被移除对象的引用
-
-### jQuery 中 attr() 和 prop() 方式的底层区别
-
 
 ### JQuery 阻止事件冒泡的两种方式
 

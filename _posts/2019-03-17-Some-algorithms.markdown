@@ -286,7 +286,7 @@ console.log(sort(arr, 0, arr.length - 1))
 3. 对”基准”左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止
 
 ```
-function quickSort(arr) {
+afunction quickSort(arr) {
     // 交换
     function swap(arr, a, b) {
         var temp = arr[a];
