@@ -15,7 +15,8 @@ tags:
 # JS 业务相关
 ### Ajax 传递中文乱码问题
 1. js 文件中使用 `encodeURI()` 方法，在后台中对传递的参数进行 `URLDecoder` 解码
-```
+
+```js
 前端 -> 后端
 encodeURI(text) //通过 Ajax 数据传递：只需编码一次；通过 URL 传递：需要编码两次
 URLDecoder.decode(query,"utf-8") //都只反编码一次即可
@@ -29,14 +30,16 @@ decodeURI(data.CN) //对应的也只需要对中文进行反编码
 
 ### 不借助第三个变量交换 A 和 B
 1. 思路：都是让其中一个变量变成一个 a 和 b 都有关系的值，这样可以先改变另一个变量值，最后改变原修改的变量值 
-```
+
+```js
 a = a + b
 b = a - b
 a = a - b
 ```
 
 2. 思路：通过底层位运算来进行交换变量值 
-```
+
+```js
 a ^= b
 b ^= a
 a ^= b
@@ -45,7 +48,8 @@ a = (b^=a^=b)^a; //简化
 ```
 
 3. 思路：先将 a 变成一个对象，这个对象保存着应该交换后的键值对，最后赋值
-```
+
+```js
 a = {a:b,b:a}
 b = a.b
 a = a.a
@@ -53,7 +57,8 @@ a = a.a
 
 
 4. 思路：和前一个方法类似，只不过对象换成了数组
-```
+
+```js
 a = [a,b]
 b = a[0]
 a = a[1]
@@ -61,12 +66,14 @@ a = a[1]
 
 
 5. 思路：根据运算符优先级，首先执行 b=a，此时的 b 直接得到了 a 的变量值，然后一步数组索引让 a 得到了 b 的值（妙啊）
-```
+
+```js
 a = [b,b=a][0]
 ```
 
 6. ES6 解构赋值
-```
+
+```js
 [a,b] = [b,a]
 ```
 
@@ -77,7 +84,8 @@ a = [b,b=a][0]
 DllPlugin 预编译模块，对项目中基本不变的、固定的模块进行预编译
 
 3. 异步按需加载组件
-```
+
+```js
 // before:
 import search from './search.vue'
 {
@@ -106,7 +114,8 @@ const search = resolve => require(['./search.vue'], resolve);
 ### 不可见缓存图片
 ##### 思路————预加载：
 常用的是`new Image();`设置其 src 来实现预载，再使用`onload()`方法回调预加载完成事件。只要浏览器把图片下载到本地，src 就会使用缓存，这是最基本的预加载方法；当 image 下载完图片后，会得到宽和高，因此可以在加载前得到图片的大小
-```
+
+```js
 function loadImage(url,callback) {
     var img = new Image();
     
@@ -128,12 +137,14 @@ function loadImage(url,callback) {
 ##### 其他方法：
 - 单纯的 CSS 实现
 可通过 CSS 的 background 属性将图片预加载到屏幕外的背景上。只要这些图片的路径保持不变，当它们在 Web 页面的其他地方被调用时，浏览器就会在渲染过程中使用预加载（缓存）的图片。简单、高效，不需要任何 JavaScript
-```
+
+```js
 #preload-01 { background: url(http://domain.tld/image-01.png) no-repeat -9999px -9999px; } 
 ```
 
 - 单纯的 JS 预加载图片
-```
+
+```js
 <div class="hidden">  
     <script type="text/javascript">  
         <!--//--><![CDATA[//><!--  
@@ -155,7 +166,8 @@ function loadImage(url,callback) {
 ```
 
 - 使用 Ajax 实现预加载
-```
+
+```js
 window.onload = function() {  
     setTimeout(function() {  
         // XHR to request a JS and a CSS  
@@ -178,7 +190,8 @@ window.onload = function() {
 将内容限制在盒子里面了，看不到滚动条同时也可以滚动
 
 - css 隐藏滚动条
-```
+
+```css
 //Chrome 和 Safari
 .element::-webkit-scrollbar { width: 0 !important }
 
@@ -205,7 +218,8 @@ window.onload = function() {
 
 - Deferred & Promise
 CommonJS 中的异步编程模型也延续了这一想法，每一个异步任务返回一个 Promise 对象，该对象有一个 then 方法，允许指定回调函数
-```
+
+```js
 f().then(f2).then(f3);
 ```
 
@@ -267,7 +281,7 @@ Web应用的组件化开发；
 ##### 两者取值和赋值的区别
 - Attribute 取值和赋值
 
-```
+```js
 //attribute 取值
   getAttribute(attribute)
   eg:var id = div1.getAttribute('id')
@@ -280,7 +294,7 @@ Web应用的组件化开发；
 
 - Property 取值和赋值
 
-```
+```js
 //通过'.'号获取 property
   var id = div1.id;
   var className = div1.className; //相当于div1.getAttribute('class')
@@ -324,13 +338,13 @@ Web应用的组件化开发；
 ### JQuery 阻止事件冒泡的两种方式
 
 方式一：`event.stopPropagation()`
-```
+```js
 $("#div1").mousedown(function(event){
   event.stopPropagation();
 });
 ```
 方式二：`return false`
-```
+```js
 $("#div1").mousedown(function(event){
   return false;
 });
@@ -344,7 +358,7 @@ $("#div1").mousedown(function(event){
 
 
 ### Two Sum 问题
-```
+```js
 var twoSum = function(nums, target){
   if ( !Array.isArray(nums) || Object.prototype.toString.call(target) !== "[object Number]" ) return;
 
@@ -368,7 +382,7 @@ var twoSum = function(nums, target){
 ##### 全局安装：
 `npm install <pageName> -g  //（这里-g是-global的简写）`
 通过上面的命令行（带-g修饰符）安装某个包，就叫全局安装。通常全局包安装在**node 目录下的 node_modules 文件夹**。可以通过执行下面几条命令查看 node、npm 的安装目录和全局包的安装目录。
-```
+```shell
 which node   // 查看 node 的安装目录
 which npm   // 查看 npm 的安装目录
 npm root -g // 查看全局包的安装目录
